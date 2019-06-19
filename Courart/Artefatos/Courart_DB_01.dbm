@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,0" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="TB_VEICULOS">
+	<schema name="courart"/>
+	<role name="postgres"/>
+	<position x="252" y="136"/>
+	<column name="ID_VEICULO" not-null="true" identity-type="ALWAYS">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="PLACA" not-null="true">
+		<type name="varchar" length="10"/>
+	</column>
+	<column name="ATIVO" not-null="true" default-value="1">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="ANO_FABRICACAO" not-null="true">
+		<type name="varchar" length="4"/>
+	</column>
+	<column name="ANO_MODELO" not-null="true">
+		<type name="varchar" length="4"/>
+	</column>
+	<column name="CHASSI" not-null="true">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="DATA_CADASTRO">
+		<type name="date" length="0"/>
+	</column>
+	<column name="DATA_DESATIVACAO">
+		<type name="date" length="0"/>
+	</column>
+	<column name="MODELO" not-null="true">
+		<type name="varchar" length="30"/>
+	</column>
+	<column name="COR">
+		<type name="varchar" length="20"/>
+	</column>
+	<column name="CONSUMO_MEDIO" not-null="true">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="QUANTIDADE_PASSAGEIROS" not-null="true" default-value="4">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="ID_VEICULO" type="pk-constr" table="courart.&quot;TB_VEICULOS&quot;">
+		<columns names="ID_VEICULO" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<schema name="courart" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<table name="TB_FUNCIONARIOS">
+	<schema name="courart"/>
+	<role name="postgres"/>
+	<position x="681" y="183"/>
+	<column name="ID_FUNCIONARIO" not-null="true" identity-type="ALWAYS">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="CPF" not-null="true">
+		<type name="varchar" length="14"/>
+	</column>
+	<column name="NOME" not-null="true">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="DATA_NASCIMENTO">
+		<type name="date" length="0"/>
+	</column>
+	<column name="LOGIN" not-null="true">
+		<type name="varchar" length="12"/>
+	</column>
+	<column name="SENHA" not-null="true">
+		<type name="varchar" length="12"/>
+	</column>
+	<constraint name="ID_FUNCIONARIO" type="pk-constr" table="courart.&quot;TB_FUNCIONARIOS&quot;">
+		<columns names="ID_FUNCIONARIO" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+</dbmodel>
