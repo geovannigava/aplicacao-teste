@@ -54,12 +54,12 @@ public class VeiculoDao implements Serializable {
 	}
 	
 	/**
-	 * Listar Todos os Veículo.
+	 * Listar Todos os Veículo ordenados por ID.
 	 * 
 	 * @return List<Veiculo>
 	 */
 	public List<Veiculo> listarTodos() {
-		return (List<Veiculo>) iVeiculoDao.findAll();
+		return (List<Veiculo>) iVeiculoDao.findAllByOrderByIdVeiculoAsc();
 	}
 	
 	/**

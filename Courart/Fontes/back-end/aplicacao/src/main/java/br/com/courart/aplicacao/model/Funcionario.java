@@ -32,29 +32,29 @@ public class Funcionario implements Serializable{
     @Column(name = "ID_FUNCIONARIO", updatable=false)
 	private Long idFuncionario;
     
-	@Column(name = "CPF")
+	@Column(name = "cpf")
 	@NotNull(message = "O campo Cpf é Obrigatorio.")
 	@Size(max = 14, min = 0, message = "Tamanho máximo do campo Cpf é 14")
 	private String cpf;
 	
-	@Column(name = "NOME")
+	@Column(name = "nome")
 	@NotNull(message = "O campo Nome é Obrigatorio.")
 	@Size(max = 40, min = 0, message = "Tamanho máximo do campo Nome é 40")
 	private String nome;
 	
-	@Column(name = "DATA_NASCIMENTO")
+	@Column(name = "data_nascimento")
 	@Convert(converter = LocalDateConverter.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 	
-	@Column(name = "LOGIN")
+	@Column(name = "login")
 	@NotNull(message = "O campo Login é Obrigatorio.")
 	@Size(max = 12, min = 0, message = "Tamanho máximo do campo Login é 12")
 	private String login;
 	
-	@Column(name = "SENHA")
+	@Column(name = "senha")
 	@NotNull(message = "O campo Senha é Obrigatorio.")
 	@Size(max = 12, min = 0, message = "Tamanho máximo do campo Senha é 12")
 	private String senha;

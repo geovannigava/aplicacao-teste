@@ -31,7 +31,7 @@ public class VeiculoService implements Serializable {
 	 * @return List<Veiculo>
 	 */
 	public List<Veiculo> buscarPorPlaca(String placa){
-		return veiculoDao.buscarPorPlaca(placa);
+		return veiculoDao.buscarPorPlaca(placa.toUpperCase());
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class VeiculoService implements Serializable {
 	 * @return List<Veiculo>
 	 */
 	public List<Veiculo> buscarPorModelo(String modelo){
-		return veiculoDao.buscarPorModelo(modelo);
+		return veiculoDao.buscarPorModelo(modelo.toUpperCase());
 	}
 
 	/**

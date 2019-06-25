@@ -25,40 +25,40 @@ SET search_path TO pg_catalog,public,courart;
 
 -- object: courart."TB_VEICULOS" | type: TABLE --
 -- DROP TABLE IF EXISTS courart."TB_VEICULOS" CASCADE;
-CREATE TABLE courart."TB_VEICULOS"(
-	"ID_VEICULO" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ,
-	"PLACA" varchar(10) NOT NULL,
-	"ATIVO" integer NOT NULL DEFAULT 1,
-	"ANO_FABRICACAO" varchar(4) NOT NULL,
-	"ANO_MODELO" varchar(4) NOT NULL,
-	"CHASSI" varchar(40) NOT NULL,
-	"DATA_CADASTRO" date,
-	"DATA_DESATIVACAO" date,
-	"MODELO" varchar(30) NOT NULL,
-	"COR" varchar(20),
-	"CONSUMO_MEDIO" decimal NOT NULL,
-	"QUANTIDADE_PASSAGEIROS" integer NOT NULL DEFAULT 4,
-	CONSTRAINT "ID_VEICULO" PRIMARY KEY ("ID_VEICULO")
+CREATE TABLE courart."tb_veiculos"(
+	"id_veiculo" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	"placa" varchar(10) NOT NULL,
+	"ativo" integer NOT NULL DEFAULT 1,
+	"ano_fabricacao" varchar(4) NOT NULL,
+	"ano_modelo" varchar(4) NOT NULL,
+	"chassi" varchar(40) NOT NULL,
+	"data_cadastro" date,
+	"data_desativacao" date,
+	"modelo" varchar(30) NOT NULL,
+	"cor" varchar(20),
+	"consumo_medio" decimal NOT NULL,
+	"quantidade_passageiros" integer NOT NULL DEFAULT 4,
+	CONSTRAINT "id_veiculo" PRIMARY KEY ("id_veiculo")
 
 );
+
 -- ddl-end --
-ALTER TABLE courart."TB_VEICULOS" OWNER TO postgres;
+ALTER TABLE courart."tb_veiculos" OWNER TO postgres;
 -- ddl-end --
 
 -- object: courart."TB_FUNCIONARIOS" | type: TABLE --
 -- DROP TABLE IF EXISTS courart."TB_FUNCIONARIOS" CASCADE;
-CREATE TABLE courart."TB_FUNCIONARIOS"(
-	"ID_FUNCIONARIO" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ,
-	"CPF" varchar(14) NOT NULL,
-	"NOME" varchar(40) NOT NULL,
-	"DATA_NASCIMENTO" date,
-	"LOGIN" varchar(12) NOT NULL,
-	"SENHA" varchar(12) NOT NULL,
-	CONSTRAINT "ID_FUNCIONARIO" PRIMARY KEY ("ID_FUNCIONARIO")
+CREATE TABLE courart."tb_funcionarios"(
+	"id_funcionario" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	"cpf" varchar(14) NOT NULL,
+	"nome" varchar(40) NOT NULL,
+	"data_nascimento" date,
+	"login" varchar(12) NOT NULL,
+	"senha" varchar(12) NOT NULL,
+	CONSTRAINT "id_funcionario" PRIMARY KEY ("id_funcionario")
 
 );
 -- ddl-end --
-ALTER TABLE courart."TB_FUNCIONARIOS" OWNER TO postgres;
+ALTER TABLE courart."tb_funcionarios" OWNER TO postgres;
 -- ddl-end --
-
 

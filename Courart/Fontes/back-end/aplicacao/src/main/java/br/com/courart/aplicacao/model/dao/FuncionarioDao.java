@@ -1,12 +1,13 @@
 package br.com.courart.aplicacao.model.dao;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import org.hibernate.annotations.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -93,6 +94,22 @@ public class FuncionarioDao implements Serializable {
 	 */
 	public void remover(Long id) {
 		iFuncionarioDao.delete(id);
+	}
+
+	/**
+	 * Listar Todos os Funcionarios aniversariantes por período.
+	 * 
+	 * @param inicio
+	 * @param fim
+	 * @return List<Funcionario>
+	 */
+	public List<Funcionario> buscarFuncionariosAniversariantes(LocalDate inicio, LocalDate fim) {
+		Query query = entityManager.createNativeQuery( "SELECT * FROM courart.tb_funcionarios WHERE (extract(DOY FROM data_nascimento) BETWEEN :diaInicio AND :diaFim ) ORDER BY id_funcionario ASC", 
+				Funcionario.class); 
+		query.setParameter("diaInicio", inicio.getDayOfYear()); 
+		query.setParameter("diaFim", fim.getDayOfYear()); 
+		return query.getResultList(); 
+		
 	}
 
 }

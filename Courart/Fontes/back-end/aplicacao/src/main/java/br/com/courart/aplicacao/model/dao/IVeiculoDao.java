@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import br.com.courart.aplicacao.model.Funcionario;
 import br.com.courart.aplicacao.model.Veiculo;
 
 public interface IVeiculoDao extends AbstractRepository<Veiculo, Long>{
@@ -24,7 +25,14 @@ public interface IVeiculoDao extends AbstractRepository<Veiculo, Long>{
 	 * @param modelo
 	 * @return List<Veiculo>
 	 */
-	@Query(" SELECT veiculo FROM Veiculo veiculo WHERE veiculo.modelo = :modelo ")
+	@Query(" SELECT veiculo FROM Veiculo veiculo WHERE veiculo.modelo LIKE %:modelo% ")
 	public List<Veiculo> buscarPorModelo(@Param("modelo") String modelo);
+	
+	/**
+	 * Listar Todos os Veículo ordenados por ID.
+	 * 
+	 * @return List<Veiculo>
+	 */
+	public List<Veiculo> findAllByOrderByIdVeiculoAsc();
 
 }

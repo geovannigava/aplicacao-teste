@@ -1,10 +1,13 @@
 package br.com.courart.aplicacao.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.courart.aplicacao.model.Funcionario;
-import br.com.courart.aplicacao.model.Veiculo;
 import br.com.courart.aplicacao.model.service.FuncionarioService;
 
 @RestController
@@ -63,6 +66,17 @@ public class FuncionarioController {
 	public ResponseEntity<List<Funcionario>> buscarPorCpf(@PathVariable String cpf) {
 		List<Funcionario> funcionarios = funcionarioService.buscarPorCpf(cpf);
 		return  funcionarios != null ? ResponseEntity.ok(funcionarios) : ResponseEntity.notFound().build();
+	}
+	
+	@RequestMapping(value = "/relatorio", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<byte[]> relatorioFuncionariosAniversariantes(
+			@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate inicio, 
+			@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate fim) throws Exception {
+		byte[] relatorio = funcionarioService.relatorioFuncionariosAniversariantes(inicio, fim);
+		
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
+				.body(relatorio);
 	}
 
 }

@@ -33,62 +33,62 @@ public class Veiculo implements Serializable{
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_VEICULO", updatable=false)
+    @Column(name = "id_veiculo", updatable=false)
 	private Long idVeiculo;
     
-	@Column(name = "PLACA")
+	@Column(name = "placa")
 	@NotNull(message = "O campo Placa é Obrigatorio.")
 	@Size(max = 10, min = 0, message = "Tamanho máximo do campo Placa é 10")
 	private String placa;
 	
-	@Column(name = "ATIVO")
+	@Column(name = "ativo")
 	@Enumerated(EnumType.ORDINAL)
 	@NotNull(message = "O campo AtivoEnum é Obrigatorio.")
 	private AtivoEnum ativoEnum;
 
-	@Column(name = "ANO_FABRICACAO")
+	@Column(name = "ano_fabricacao")
 	@NotNull(message = "O campo Ano de Fabricação é Obrigatorio.")
 	@Size(max = 4, min = 0, message = "Tamanho máximo do campo Ano de Fabricação é 4")
 	private String anoFabricacao;
 	
-	@Column(name = "ANO_MODELO")
+	@Column(name = "ano_modelo")
 	@NotNull(message = "O campo Ano do Modelo é Obrigatorio.")
 	@Size(max = 4, min = 0, message = "Tamanho máximo do campo Ano do Modelo é 4")
 	private String anoModelo;
 	
-	@Column(name = "CHASSI")
+	@Column(name = "chassi")
 	@NotNull(message = "O campo Chassi é Obrigatorio.")
 	@Size(max = 40, min = 0, message = "Tamanho máximo do campo Chassi é 40")
 	private String chassi;
 	
-	@Column(name = "DATA_CADASTRO")
+	@Column(name = "data_cadastro")
 	@Convert(converter = LocalDateConverter.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro;
 	
-	@Column(name = "DATA_DESATIVACAO")
+	@Column(name = "data_desativacao")
 	@Convert(converter = LocalDateConverter.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataDesativacao;
 	
-	@Column(name = "MODELO")
+	@Column(name = "modelo")
 	@NotNull(message = "O campo Modelo é Obrigatorio.")
 	@Size(max = 30, min = 0, message = "Tamanho máximo do campo Modelo é 30")
 	private String modelo;
 	
-	@Column(name = "COR")
+	@Column(name = "cor")
 	@Size(max = 20, min = 0, message = "Tamanho máximo do campo Cor é 20")
 	private String cor;
 	
-	@Column(name = "CONSUMO_MEDIO")
+	@Column(name = "consumo_medio")
 	@NotNull(message = "O campo Consumo Médio é Obrigatorio.")
 	private BigDecimal consumoMedio;
 	
-	@Column(name = "QUANTIDADE_PASSAGEIROS")
+	@Column(name = "quantidade_passageiros")
 	@NotNull(message = "O campo Quantidade de Passageiros é Obrigatorio.")
 	private Integer quantidadePassageiros;
 

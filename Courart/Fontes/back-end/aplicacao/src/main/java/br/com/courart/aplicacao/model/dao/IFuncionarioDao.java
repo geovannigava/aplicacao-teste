@@ -1,5 +1,6 @@
 package br.com.courart.aplicacao.model.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -33,5 +34,7 @@ public interface IFuncionarioDao extends AbstractRepository<Funcionario, Long>{
 	 * @return List<Funcionario>
 	 */
 	public List<Funcionario> findAllByOrderByIdFuncionarioAsc();
+
+	
 
 }
