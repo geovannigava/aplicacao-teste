@@ -1,16 +1,15 @@
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { environment } from './../../../environments/environment';
-import { Funcionario } from '../../models/funcionario';
+import { Veiculo } from '../../models/veiculo';
 
-const PATH = '/funcionario';
+const PATH = '/veiculo';
 
 @Injectable()
-export class FuncionarioService {
+export class VeiculoService {
 
   courartApiUrl = '';
 
@@ -22,10 +21,8 @@ export class FuncionarioService {
 
   constructor (
     private http: HttpClient,
-    public router: Router,
     private erroHandlerService: ErrorHandlerService
   ) { this.courartApiUrl = environment.courartApiUrl; }
-
 
 	/**
 	 * Listar Todos os Funcionarios.
@@ -53,14 +50,14 @@ export class FuncionarioService {
   /**
 	 * Salvar Funcionario
 	 *
-   * @param funcionario
+   * @param veiculo
 	 * @return Observable<any>
 	 */
-  public salvar(funcionario: Funcionario): Observable<any> {
+  public salvar(veiculo: Veiculo): Observable<any> {
     let params = new HttpParams();
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
-    let bodyJson = JSON.stringify(funcionario);
+    let bodyJson = JSON.stringify(veiculo);
     this.http
       .post(
         this.courartApiUrl + PATH,
@@ -80,17 +77,17 @@ export class FuncionarioService {
   /**
 	 * Atualizar Funcionario
 	 *
-   * @param funcionario
+   * @param veiculo
 	 * @return Observable<any>
 	 */
-  public atualizar(funcionario: Funcionario): Observable<any> {
+  public atualizar(veiculo: Veiculo): Observable<any> {
     let params = new HttpParams();
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
-    let bodyJson = JSON.stringify(funcionario);
+    let bodyJson = JSON.stringify(veiculo);
     this.http
       .put(
-        this.courartApiUrl + PATH + `/${funcionario.idFuncionario}`,
+        this.courartApiUrl + PATH + `/${veiculo.idVeiculo}`,
         bodyJson,
         { headers: this.headers }
       )
@@ -107,13 +104,13 @@ export class FuncionarioService {
   /**
    * Remove Funcionario
    *
-   * @param idFuncionario
+   * @param idVeiculo
    * @return Observable<any>
    */
-  remover(idFuncionario: number): Observable<any> {
+  remover(idVeiculo: number): Observable<any> {
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
-    this.http.delete(this.courartApiUrl + PATH +`/${idFuncionario}`)
+    this.http.delete(this.courartApiUrl + PATH +`/${idVeiculo}`)
     .subscribe(dados => {
       if (dataObserver != null) {
         dataObserver.next(dados);
@@ -127,14 +124,14 @@ export class FuncionarioService {
   /**
 	 * Buscar Funcionario por Id
 	 *
-   * @param idFuncionario
+   * @param idVeiculo
 	 * @return Observable<any>
 	 */
-  public buscarPorId(idFuncionario: number): Observable<any> {
+  public buscarPorId(idVeiculo: number): Observable<any> {
     let params = new HttpParams();
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
-    this.http.get(this.courartApiUrl + PATH + `/${idFuncionario}`, {
+    this.http.get(this.courartApiUrl + PATH + `/${idVeiculo}`, {
       headers: this.headers,
       params: params,
       reportProgress: true})
@@ -151,14 +148,14 @@ export class FuncionarioService {
   /**
 	 * Listar Funcionários por nome.
 	 *
-   * @param nome
+   * @param placa
 	 * @return Observable<any>
 	 */
-  public listarPorNome(nome: string): Observable<any> {
+  public listarPorPlaca(placa: string): Observable<any> {
     let params = new HttpParams();
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
-    this.http.get(this.courartApiUrl + PATH + `/buscarPorNome/${nome}`, {
+    this.http.get(this.courartApiUrl + PATH + `/buscarPorPlaca/${placa}`, {
       headers: this.headers,
       params: params,
       reportProgress: true})
@@ -175,14 +172,14 @@ export class FuncionarioService {
   /**
 	 * Listar Funcionários por cpf.
 	 *
-   * @param cpf
+   * @param modelo
 	 * @return Observable<any>
 	 */
-  public listarPorCpf(cpf: string): Observable<any> {
+  public listarPorModelo(modelo: string): Observable<any> {
     let params = new HttpParams();
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
-    this.http.get(this.courartApiUrl + PATH + `/buscarPorCpf/${cpf}`, {
+    this.http.get(this.courartApiUrl + PATH + `/buscarPorModelo/${modelo}`, {
       headers: this.headers,
       params: params,
       reportProgress: true})

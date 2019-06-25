@@ -7,11 +7,13 @@ import { MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule, Mat
 
 import { MenuNavComponent } from './menu-nav/menu-nav.component';
 import { CpfPipe } from './pipes/cpf.pipe';
+import { PlacaPipe } from './pipes/placa.pipe';
 
 @NgModule({
   declarations: [
     MenuNavComponent,
-    CpfPipe
+    CpfPipe,
+    PlacaPipe
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { CpfPipe } from './pipes/cpf.pipe';
   ],
   exports: [
     MenuNavComponent,
-    CpfPipe
+    CpfPipe,
+    PlacaPipe
   ]
 })
 export class CoreModule { }

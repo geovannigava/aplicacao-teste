@@ -39,7 +39,7 @@
 
         <div class="col-md-2">
           <mat-form-field>
-            <mat-select placeholder="Ativo ?" [(value)]="tipoStatusSelecionado" required>
+            <mat-select placeholder="Ativo ?" [(value)]="veiculo.ativoEnum" required>
               <mat-option *ngFor="let tp of tipoStatus" [value]="tp.value">
                 {{tp.viewValue}}
               </mat-option>
@@ -66,7 +66,7 @@
         <div class="col-md-2">
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Consumo Médio" value="Digite o Consumo Médio"
-            name="consumoMedio" [(ngModel)]="veiculo.consumoMedio" mask="9X.0"
+            name="consumoMedio" [(ngModel)]="veiculo.consumoMedio" mask="99.0"
               #consumoMedio="ngModel" required>
           </mat-form-field>
         </div>
@@ -81,8 +81,6 @@
 
       </div>
 
-
-
       <div *ngIf="!veiculo.idVeiculo" class=" pull-left">
         <button mat-raised-button color="primary" (click)="salvarFuncionario(form)"
         [disabled]="form.invalid">Cadastrar
@@ -90,10 +88,9 @@
       </div>
       <div *ngIf="veiculo.idVeiculo" class=" pull-left">
         <button mat-raised-button color="warn" [disabled]="form.invalid"
-        (click)="atualizarFuncionario(funcionario, form)">Alterar
+        (click)="atualizarVeiculo(veiculo, form)">Alterar
         Veículo</button>
       </div>
-
 
     </form>
     <div class=" pull-right">
@@ -108,20 +105,113 @@
       <div class="row form-group">
         <div class="col-md-6">
           <mat-form-field>
-            <input matInput placeholder="Consulta por Placa" [(ngModel)]="nomeOuParte"
-            name="nomeOuParte" mask="SSS-0000">
-            <mat-icon matSuffix (click)="buscarPorNomeOuParte()" class="pointer">search</mat-icon>
+            <input matInput placeholder="Consulta por Placa" [(ngModel)]="placaBusca"
+            name="placaBusca" mask="SSS-0000">
+            <mat-icon matSuffix (click)="buscarPorPlaca()" class="pointer">search</mat-icon>
           </mat-form-field>
         </div>
         <div class="col-md-6">
           <mat-form-field>
             <input matInput placeholder="Consulta por Modelo"
-            [(ngModel)]="cpfBusca" name="cpfBusca">
-            <mat-icon matSuffix (click)="buscarPorCpf()" class="pointer">search</mat-icon>
+            [(ngModel)]="modeloBusca" name="modeloBusca">
+            <mat-icon matSuffix (click)="buscarPorModelo()" class="pointer">search</mat-icon>
           </mat-form-field>
         </div>
       </div>
     </form>
   </mat-card>
+
+  <mat-card class="matcard-container">
+    <h4 class="box-title fonte" >Veículos:</h4>
+    <div class="bottom-right">
+        <button mat-raised-button color="primary" (click)="buscarTodosVeiculos()"
+        > Buscar Todos</button>
+    </div>
+    <br>
+    <table mat-table [dataSource]="dataSource" class="example-full-width">
+
+        <ng-container matColumnDef="idVeiculo">
+          <th mat-header-cell *matHeaderCellDef> <b>No.</b>  </th>
+          <td mat-cell *matCellDef="let veiculo" > {{veiculo.idVeiculo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="placa" >
+          <th mat-header-cell *matHeaderCellDef> <b>Placa</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.placa | placa}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="chassi">
+          <th mat-header-cell *matHeaderCellDef> <b>Chassi</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.chassi}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="anoFabricacao">
+          <th mat-header-cell *matHeaderCellDef> <b>Ano Fabricação</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.anoFabricacao}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="anoModelo">
+          <th mat-header-cell *matHeaderCellDef> <b>anoModelo</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.anoModelo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ativoEnum">
+            <th mat-header-cell *matHeaderCellDef> <b>Ativo ?</b> </th>
+            <td mat-cell *matCellDef="let veiculo"> {{veiculo.ativoEnum}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modelo">
+          <th mat-header-cell *matHeaderCellDef> <b>Modelo</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.modelo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cor">
+          <th mat-header-cell *matHeaderCellDef> <b>Cor</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.cor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="consumoMedio">
+          <th mat-header-cell *matHeaderCellDef> <b>Consumo Médio</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.consumoMedio}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantidadePassageiros">
+          <th mat-header-cell *matHeaderCellDef> <b>Qtde Passageiros</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.quantidadePassageiros}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataCadastro">
+          <th mat-header-cell *matHeaderCellDef> <b>Data Cadastro</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.dataCadastro}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataDesativacao">
+          <th mat-header-cell *matHeaderCellDef> <b>Data Desativação</b> </th>
+          <td mat-cell *matCellDef="let veiculo"> {{veiculo.dataDesativacao}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="editar">
+          <th mat-header-cell *matHeaderCellDef> <b>Editar</b> </th>
+          <td mat-cell *matCellDef="let veiculo" class="mat-column-botoes">
+            <button>
+              <mat-icon (click)="selecionarVeiculo(veiculo.idVeiculo)">create</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="excluir">
+            <th mat-header-cell *matHeaderCellDef> <b>Excluir</b> </th>
+            <td mat-cell *matCellDef="let veiculo" class="mat-column-botoes">
+              <button>
+                <mat-icon (click)="dialogoConfirmacaoExclusao(veiculo.idVeiculo)">clear</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</mat-card>
 
 </div>

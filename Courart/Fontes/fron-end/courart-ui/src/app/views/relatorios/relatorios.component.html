@@ -1,3 +1,61 @@
-<p>
-  relatorios works!
-</p>
+<div class="example-container">
+  <mat-card class="matcard-container">
+    <h4 class="box-title fonte">Relatório Fucionário - Aniversáriantes por Período:</h4>
+    <br>
+    <form #form="ngForm">
+      <div class="row form-group">
+
+        <div class="col-md-4">
+          <mat-form-field>
+            <input matInput [matDatepicker]="dataInicialFunc" placeholder="Data Inicial">
+            <mat-datepicker-toggle matSuffix [for]="dataInicialFunc"></mat-datepicker-toggle>
+            <mat-datepicker #dataInicialFunc></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field>
+            <input matInput [matDatepicker]="dataFinalFunc" placeholder="Data Final">
+            <mat-datepicker-toggle matSuffix [for]="dataFinalFunc"></mat-datepicker-toggle>
+            <mat-datepicker #dataFinalFunc></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class=" pull-left">
+        <button mat-raised-button color="primary" (click)="salvarFuncionario(form)"
+        [disabled]="form.invalid">Gerar Relatório</button>
+      </div>
+    </form>
+  </mat-card>
+  <mat-card class="matcard-container">
+    <h4 class="box-title fonte">Relatório Veículo - Veículos Ativos por Período:</h4>
+    <br>
+    <form #form="ngForm">
+      <div class="row form-group">
+
+        <div class="col-md-4">
+          <mat-form-field>
+            <input matInput [matDatepicker]="dataIncialVeiculo" placeholder="Data Inicial">
+            <mat-datepicker-toggle matSuffix [for]="dataIncialVeiculo"></mat-datepicker-toggle>
+            <mat-datepicker #dataIncialVeiculo></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field>
+            <input matInput [matDatepicker]="dataFinalVeiculo" placeholder="Data Final">
+            <mat-datepicker-toggle matSuffix [for]="dataFinalVeiculo"></mat-datepicker-toggle>
+            <mat-datepicker #dataFinalVeiculo></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class=" pull-left">
+        <button mat-raised-button color="primary" (click)="salvarFuncionario(form)"
+        [disabled]="form.invalid">Gerar Relatório</button>
+      </div>
+    </form>
+  </mat-card>
+
+</div>

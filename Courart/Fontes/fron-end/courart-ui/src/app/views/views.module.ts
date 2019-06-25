@@ -9,12 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MatSnackBarModule, MatPaginatorModule, MatTableModule, MatNativeDateModule, MatDatepickerModule, MatInputModule, MatCardModule, MatSelectModule, MatFormFieldModule, MatDialogModule } from '@angular/material';
 import {NgxMaskModule, IConfig} from 'ngx-mask';
 
+import { FuncionarioService } from './../services/funcionario/funcionario.service';
 import { ViewsRoutingModule } from './views.routing.module';
 import { RelatoriosComponent } from './relatorios/relatorios.component';
 import { CoreModule } from './../core/core.module';
 import { ManterFuncionariosComponent } from './manter-funcionarios/manter-funcionarios.component';
 import { ManterVeiculosComponent } from './manter-veiculos/manter-veiculos.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { VeiculoService } from '../services/veiculo/veiculo.service';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -53,7 +55,10 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     MatDialogModule
   ],
   exports: [
-
+  ],
+  providers: [
+    FuncionarioService,
+    VeiculoService
   ],
   entryComponents: [DialogBoxComponent],
 })

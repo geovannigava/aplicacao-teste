@@ -97,7 +97,7 @@ export class ManterFuncionariosComponent implements OnInit {
   }
 
   private excluirFuncionario(idFuncionario: number){
-    this.funcionarioService.remover(idFuncionario).subscribe( (retorno: Funcionario) => {
+    this.funcionarioService.remover(idFuncionario).subscribe( (retorno: Boolean) => {
       if(retorno){
         this.abrirBarraAviso('Funcionário Excluído.', 'Sucesso');
         this.funcionario = new Funcionario();
@@ -105,6 +105,7 @@ export class ManterFuncionariosComponent implements OnInit {
       }
     });
   }
+
   private buscarPorNomeOuParte(){
     if(this.nomeOuParte != null){
       if(this.nomeOuParte.length > 1){
@@ -133,5 +134,4 @@ export class ManterFuncionariosComponent implements OnInit {
     this.funcionario = new Funcionario();
     form.reset();
   }
-
 }
