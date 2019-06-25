@@ -1,0 +1,127 @@
+<div class="example-container">
+  <mat-card class="matcard-container">
+    <h4 class="box-title fonte">Dados do Veículo:</h4>
+    <br>
+    <form #form="ngForm">
+
+      <div class="row form-group">
+        <div class="col-md-2">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Placa" value="Digite a Placa" name="placa"
+            [(ngModel)]="veiculo.placa" #placa="ngModel"  mask="SSS-0000"
+              required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Chassi" value="Digite o Chassi" name="chassi"
+            [(ngModel)]="veiculo.chassi"
+              #chassi="ngModel" required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Ano Fabricação" value="Ano Fabricação"
+            name="anoFabricacao" [(ngModel)]="veiculo.anoFabricacao" mask="0000"
+              #anoFabricacao="ngModel" required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Ano Modelo" value="Digite a Ano do Modelo"
+            name="anoModelo" [(ngModel)]="veiculo.anoModelo" mask="0000"
+              #anoModelo="ngModel" required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field>
+            <mat-select placeholder="Ativo ?" [(value)]="tipoStatusSelecionado" required>
+              <mat-option *ngFor="let tp of tipoStatus" [value]="tp.value">
+                {{tp.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Modelo" value="Digite o Modelo" name="modelo"
+            [(ngModel)]="veiculo.modelo"
+              #modelo="ngModel" required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Cor" value="Digite a Cor" name="cor"
+            [(ngModel)]="veiculo.cor"
+              #modelo="ngModel" required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Consumo Médio" value="Digite o Consumo Médio"
+            name="consumoMedio" [(ngModel)]="veiculo.consumoMedio" mask="9X.0"
+              #consumoMedio="ngModel" required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Quantidade Passageiros" value="Digite a Quantidade Passageiros"
+            name="quantidadePassageiros" [(ngModel)]="veiculo.quantidadePassageiros" mask="90"
+              #quantidadePassageiros="ngModel" required>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+
+
+      <div *ngIf="!veiculo.idVeiculo" class=" pull-left">
+        <button mat-raised-button color="primary" (click)="salvarFuncionario(form)"
+        [disabled]="form.invalid">Cadastrar
+          Veículo</button>
+      </div>
+      <div *ngIf="veiculo.idVeiculo" class=" pull-left">
+        <button mat-raised-button color="warn" [disabled]="form.invalid"
+        (click)="atualizarFuncionario(funcionario, form)">Alterar
+        Veículo</button>
+      </div>
+
+
+    </form>
+    <div class=" pull-right">
+      <button mat-stroked-button color="primary" (click)="resetarForm(form)">Cancelar</button>
+    </div>
+  </mat-card>
+
+  <mat-card class="matcard-container">
+    <h4 class="box-title fonte">Tipo de Consulta:</h4>
+    <br>
+    <form>
+      <div class="row form-group">
+        <div class="col-md-6">
+          <mat-form-field>
+            <input matInput placeholder="Consulta por Placa" [(ngModel)]="nomeOuParte"
+            name="nomeOuParte" mask="SSS-0000">
+            <mat-icon matSuffix (click)="buscarPorNomeOuParte()" class="pointer">search</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field>
+            <input matInput placeholder="Consulta por Modelo"
+            [(ngModel)]="cpfBusca" name="cpfBusca">
+            <mat-icon matSuffix (click)="buscarPorCpf()" class="pointer">search</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+
+</div>

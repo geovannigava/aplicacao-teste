@@ -1,0 +1,52 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item (click)="clickManterVeiculos()" role="button" routerLinkActive="active">
+          <mat-icon aria-hidden="false" >directions_car</mat-icon>
+        <span > Veículos</span>
+      </a>
+      <a mat-list-item (click)="clickManterFuncionarios()" role="button" routerLinkActive="active">
+        <mat-icon aria-hidden="false" >people</mat-icon>
+        <span > Funcionários</span>
+      </a>
+      <a mat-list-item (click)="clickRelatorios()" role="button" routerLinkActive="active">
+        <mat-icon aria-hidden="false" >assignment</mat-icon>
+        <span > Relatórios</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span> <b>Courart Informática </b>
+       Desenvolvimento de Sistemas</span>
+    </mat-toolbar>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+      <ng-content></ng-content>
+
+        <!-- Loading (remove the following to stop the loading)-->
+        <!-- <div class="overlay" >
+          <i class="fa fa-refresh fa-spin"></i>
+        </div> -->
+        <!-- end loading -->
+
+      </div>
+
+
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,155 @@
+<div class="example-container">
+  <mat-card class="matcard-container">
+      <h4 class="box-title fonte" >Dados do Funcionário:</h4>
+      <br>
+    <form  #form="ngForm">
+      <div class="row form-group">
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Nome" value="Digite o Nome" name="nome"
+            [(ngModel)]="funcionario.nome" #nome="ngModel"
+              required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="CPF" value="Digite o CPF" name="cpf"
+            [(ngModel)]="funcionario.cpf" #cpf="ngModel" mask="000.000.000-00"
+              required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Data de Nascimento"
+                [(ngModel)]="dataTemp" #dataNascimento="ngModel" name="dataNascimento">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Login" value="Digite o Login" name="login"
+            [(ngModel)]="funcionario.login" #cpf="ngModel"
+              required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Senha" value="Digite a Senha" name="senha"
+              [(ngModel)]="funcionario.senha" #cpf="ngModel"
+                required>
+            </mat-form-field>
+          </div>
+      </div>
+
+
+
+    <div *ngIf="!funcionario.idFuncionario" class=" pull-left">
+    <button mat-raised-button color="primary" (click)="salvarFuncionario(form)"
+    [disabled]="form.invalid">Cadastrar Funcionário</button>
+    </div>
+    <div *ngIf="funcionario.idFuncionario" class=" pull-left">
+      <button mat-raised-button color="warn" [disabled]="form.invalid"
+      (click)="atualizarFuncionario(funcionario, form)">Alterar Funcionário</button>
+    </div>
+
+
+    </form>
+    <div class=" pull-right">
+        <button mat-stroked-button color="primary"
+        (click)="resetarForm(form)">Cancelar</button>
+      </div>
+  </mat-card>
+
+  <mat-card class="matcard-container">
+      <h4 class="box-title fonte" >Tipo de Consulta:</h4>
+      <br>
+  <form >
+    <div class="row form-group">
+    <div class="col-md-6">
+          <mat-form-field >
+              <input matInput placeholder="Consulta por Nome"
+              [(ngModel)]="nomeOuParte" name="nomeOuParte">
+              <mat-icon matSuffix (click)="buscarPorNomeOuParte()"
+              class="pointer">search</mat-icon>
+            </mat-form-field>
+      </div>
+      <div class="col-md-6">
+          <mat-form-field >
+              <input matInput placeholder="Consulta por CPF" mask="000.000.000-00"
+              [(ngModel)]="cpfBusca" name="cpfBusca">
+              <mat-icon matSuffix (click)="buscarPorCpf()" class="pointer">search</mat-icon>
+            </mat-form-field>
+      </div>
+    </div>
+    </form>
+  </mat-card>
+
+  <mat-card class="matcard-container">
+      <h4 class="box-title fonte" >Funcionários:</h4>
+      <div class="bottom-right">
+          <button mat-raised-button color="primary" (click)="buscarTodosFuncionarios()"
+          > Buscar Todos</button>
+      </div>
+      <br>
+      <table mat-table [dataSource]="dataSource" class="example-full-width">
+
+          <ng-container matColumnDef="idFuncionario">
+            <th mat-header-cell *matHeaderCellDef> <b>No.</b>  </th>
+            <td mat-cell *matCellDef="let funcionario" > {{funcionario.idFuncionario}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nome" >
+            <th mat-header-cell *matHeaderCellDef> <b>Nome</b> </th>
+            <td mat-cell *matCellDef="let funcionario"> {{funcionario.nome}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="cpf">
+            <th mat-header-cell *matHeaderCellDef> <b>CPF</b> </th>
+            <td mat-cell *matCellDef="let funcionario"> {{funcionario.cpf | cpf}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dataNascimento">
+            <th mat-header-cell *matHeaderCellDef> <b>Data Nascimento</b> </th>
+            <td mat-cell *matCellDef="let funcionario"> {{funcionario.dataNascimento}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="login">
+            <th mat-header-cell *matHeaderCellDef> <b>Login</b> </th>
+            <td mat-cell *matCellDef="let funcionario"> {{funcionario.login}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="senha">
+              <th mat-header-cell *matHeaderCellDef> <b>Senha</b> </th>
+              <td mat-cell *matCellDef="let funcionario"> {{funcionario.senha}} </td>
+            </ng-container>
+
+          <ng-container matColumnDef="editar">
+            <th mat-header-cell *matHeaderCellDef> <b>Editar</b> </th>
+            <td mat-cell *matCellDef="let funcionario" class="mat-column-botoes">
+              <button>
+                <mat-icon (click)="selecionarFuncionario(funcionario.idFuncionario)">create</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="excluir">
+              <th mat-header-cell *matHeaderCellDef> <b>Excluir</b> </th>
+              <td mat-cell *matCellDef="let funcionario" class="mat-column-botoes">
+                <button>
+                  <mat-icon (click)="dialogoConfirmacaoExclusao(funcionario.idFuncionario)">clear</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card>
+
+</div>
