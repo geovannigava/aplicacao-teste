@@ -1,6 +1,7 @@
 package br.com.courart.aplicacao.model.service;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.courart.aplicacao.model.Veiculo;
 import br.com.courart.aplicacao.model.dao.VeiculoDao;
+import br.com.courart.aplicacao.model.enums.AtivoEnum;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -49,6 +51,14 @@ public class VeiculoService implements Serializable {
 	 * @return Veiculo
 	 */
 	public Veiculo salvar(Veiculo veiculo) {
+		veiculo.setDataCadastro(LocalDate.now());
+		//Verifica se é uma desativação, caso seja atualiza o campo Data da Desativação
+		if(veiculo.getAtivoEnum() == AtivoEnum.NAO) {
+			veiculo.setDataDesativacao(LocalDate.now());
+		}
+		veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
+		veiculo.setCor(veiculo.getCor().toUpperCase());
+		veiculo.setModelo(veiculo.getModelo().toUpperCase());
 		return veiculoDao.salvar(veiculo);
 	}
 
@@ -82,6 +92,14 @@ public class VeiculoService implements Serializable {
 		Veiculo veiculoDb = this.buscarPorId(id);
 		if(veiculoDb != null) {
 			BeanUtils.copyProperties(veiculo, veiculoDb, "idVeiculo");
+			
+			//Verifica se é uma desativação, caso seja atualiza o campo Data da Desativação
+			if(veiculoDb.getAtivoEnum() == AtivoEnum.NAO) {
+				veiculoDb.setDataDesativacao(LocalDate.now());
+			} else {
+				veiculoDb.setDataDesativacao(null);
+			}
+			
 			return veiculoDao.atualizar(veiculoDb);
 		} else {
 			throw new EmptyResultDataAccessException(1);

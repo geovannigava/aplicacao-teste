@@ -50,6 +50,7 @@ public class FuncionarioService implements Serializable {
 	 * @return Funcionario
 	 */
 	public Funcionario salvar(Funcionario funcionario) {
+		funcionario.setNome(funcionario.getNome().toUpperCase());
 		return funcionarioDao.salvar(funcionario);
 	}
 
@@ -82,6 +83,7 @@ public class FuncionarioService implements Serializable {
 		Funcionario funcionarioDb = this.buscarPorId(id);
 		if(funcionarioDb != null) {
 			BeanUtils.copyProperties(funcionario, funcionarioDb, "idFuncionario");
+			funcionarioDb.setNome(funcionarioDb.getNome().toUpperCase());
 			return funcionarioDao.atualizar(funcionarioDb);
 		} else {
 			throw new EmptyResultDataAccessException(1);

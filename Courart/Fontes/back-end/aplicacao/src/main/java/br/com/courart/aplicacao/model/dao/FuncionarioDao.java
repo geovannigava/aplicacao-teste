@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.annotations.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -54,13 +55,15 @@ public class FuncionarioDao implements Serializable {
 	}
 
 	/**
-	 * Listar Todos os Funcionarios.
+	 * Listar Todos os Funcionarios ordenando por ID.
 	 * 
 	 * @return List<Funcionario>
 	 */
 	public List<Funcionario> listarTodos() {
-		return (List<Funcionario>) iFuncionarioDao.findAll();
+		return (List<Funcionario>) iFuncionarioDao.findAllByOrderByIdFuncionarioAsc();
 	}
+	
+
 
 	/**
 	 * Buscar Funcionario por Id.

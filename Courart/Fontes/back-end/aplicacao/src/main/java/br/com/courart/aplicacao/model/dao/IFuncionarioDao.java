@@ -26,5 +26,12 @@ public interface IFuncionarioDao extends AbstractRepository<Funcionario, Long>{
 	 */
 	@Query(" SELECT funcionario FROM Funcionario funcionario WHERE funcionario.cpf = :cpf")
 	public List<Funcionario> buscarPorCpf(@Param("cpf") String cpf);
+	
+	/**
+	 * Listar Todos os Funcionarios ordenando por ID.
+	 * 
+	 * @return List<Funcionario>
+	 */
+	public List<Funcionario> findAllByOrderByIdFuncionarioAsc();
 
 }
