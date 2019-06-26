@@ -207,7 +207,6 @@ export class FuncionarioService {
   public buscarRelatorioAniversariantes(inicio: Date, fim: Date): Observable<Blob> {
     let params = new HttpParams().set('inicio', Utils.converterDataParaString(inicio));
     params = params.set('fim', Utils.converterDataParaString(fim));
-    console.log(params);
     const httpOptions = {
       responseType: 'blob' as 'json',
       params: params
@@ -216,8 +215,6 @@ export class FuncionarioService {
       this.courartApiUrl + PATH + '/relatorio',
       httpOptions
     );
-
-
   }
 
 

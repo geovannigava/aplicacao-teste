@@ -8,7 +8,7 @@
         <div class="col-md-4">
           <mat-form-field>
             <input matInput [matDatepicker]="dataInicialFunc" placeholder="Data Inicial"
-            [(ngModel)]="dataInicialFuncionario" name="dataInicialFuncionario">
+            [(ngModel)]="dataInicialFuncionario" name="dataInicialFuncionario" required>
             <mat-datepicker-toggle matSuffix [for]="dataInicialFunc"></mat-datepicker-toggle>
             <mat-datepicker #dataInicialFunc></mat-datepicker>
           </mat-form-field>
@@ -17,7 +17,7 @@
         <div class="col-md-4">
           <mat-form-field>
             <input matInput [matDatepicker]="dataFinalFunc" placeholder="Data Final"
-            [(ngModel)]="dataFinalFuncionario"  name="dataFinalFuncionario" >
+            [(ngModel)]="dataFinalFuncionario"  name="dataFinalFuncionario" required>
             <mat-datepicker-toggle matSuffix [for]="dataFinalFunc"></mat-datepicker-toggle>
             <mat-datepicker #dataFinalFunc></mat-datepicker>
           </mat-form-field>
@@ -32,7 +32,7 @@
   </mat-card>
 
   <mat-card class="matcard-container">
-    <h4 class="box-title fonte">Relatório Fucionário - Aniversáriantes por Período:</h4>
+    <h4 class="box-title fonte">Relatório Veículos - Veículos Ativos por Período:</h4>
     <br>
     <form #formVeiculo="ngForm">
       <div class="row form-group">
@@ -40,7 +40,7 @@
         <div class="col-md-4">
           <mat-form-field>
             <input matInput [matDatepicker]="dataInicialV" placeholder="Data Inicial"
-            [(ngModel)]="dataInicialVeiculo" name="dataInicialVeiculo">
+            [(ngModel)]="dataInicialVeiculo" name="dataInicialVeiculo" required>
             <mat-datepicker-toggle matSuffix [for]="dataInicialV"></mat-datepicker-toggle>
             <mat-datepicker #dataInicialV></mat-datepicker>
           </mat-form-field>
@@ -49,7 +49,7 @@
         <div class="col-md-4">
           <mat-form-field>
             <input matInput [matDatepicker]="dataFinalV" placeholder="Data Final"
-            [(ngModel)]="dataFinalVeiculo"  name="dataFinalVeiculo" >
+            [(ngModel)]="dataFinalVeiculo"  name="dataFinalVeiculo" required >
             <mat-datepicker-toggle matSuffix [for]="dataFinalV"></mat-datepicker-toggle>
             <mat-datepicker #dataFinalV></mat-datepicker>
           </mat-form-field>
@@ -57,7 +57,7 @@
       </div>
 
       <div class=" pull-left">
-        <button mat-raised-button color="primary" (click)="buscarRelatorioAniversariantes()"
+        <button mat-raised-button color="primary" (click)="buscarRelatorioVeiculosAtivos()"
         [disabled]="formVeiculo.invalid">Gerar Relatório</button>
       </div>
     </form>

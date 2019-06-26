@@ -42,7 +42,7 @@ public class FuncionarioService implements Serializable {
 	 * @return List<Funcionario>
 	 */
 	public List<Funcionario> buscarPorNome(String nome) {
-		return funcionarioDao.buscarPorNome(nome);
+		return funcionarioDao.buscarPorNome(nome.toUpperCase());
 	}
 	
 	/**
@@ -133,7 +133,7 @@ public class FuncionarioService implements Serializable {
 		parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
 		
 		InputStream inputStream = this.getClass().getResourceAsStream(
-				"/relatorios/lancamentos-por-pessoa.jasper");
+				"/relatorios/funcionarios-aniversariantes.jasper");
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros,
 				new JRBeanCollectionDataSource(dados));

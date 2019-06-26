@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ManterFuncionariosComponent } from './manter-funcionarios/manter-funcionarios.component';
 import { ManterVeiculosComponent } from './manter-veiculos/manter-veiculos.component';
 import { RelatoriosComponent } from './relatorios/relatorios.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,14 @@ const routes: Routes = [
   {
     path: 'relatorios',
     component: RelatoriosComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'home'
   }
 ];
 

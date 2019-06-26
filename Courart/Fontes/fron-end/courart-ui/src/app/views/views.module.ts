@@ -17,6 +17,7 @@ import { ManterFuncionariosComponent } from './manter-funcionarios/manter-funcio
 import { ManterVeiculosComponent } from './manter-veiculos/manter-veiculos.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { VeiculoService } from '../services/veiculo/veiculo.service';
+import { HomeComponent } from './home/home.component';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -25,7 +26,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     ManterVeiculosComponent,
     ManterFuncionariosComponent,
     RelatoriosComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
+    HomeComponent
   ],
   imports: [
     CoreModule,

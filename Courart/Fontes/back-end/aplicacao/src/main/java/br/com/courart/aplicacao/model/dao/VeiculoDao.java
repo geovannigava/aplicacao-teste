@@ -1,6 +1,7 @@
 package br.com.courart.aplicacao.model.dao;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -90,6 +91,17 @@ public class VeiculoDao implements Serializable {
 	 */
 	public void remover(Long id) {
 		 iVeiculoDao.delete(id);
+	}
+	
+	/**
+	 * Buscar Veículos ativos por período
+	 * 
+	 * @param inicio
+	 * @param fim
+	 * @return List<Veiculo>
+	 */
+	public List<Veiculo> buscarVeiculosAtivos(LocalDate inicio, LocalDate fim) {
+		return iVeiculoDao.buscarVeiculosAtivos(inicio, fim);
 	}
 
 }

@@ -156,8 +156,10 @@
   cursor: pointer;
 }
 
-
-
 .bottom-right{
   right: 2%;
-  }
+}
+
+.text-center .img-responsive {
+  margin: 0 auto;
+}

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { environment } from './../../../environments/environment';
 import { Veiculo } from '../../models/veiculo';
+import { Utils } from '../../util/utils';
 
 const PATH = '/veiculo';
 
@@ -191,6 +192,26 @@ export class VeiculoService {
         this.erroHandlerService.handle(err);
       });
       return data;
+  }
+
+    /**
+	 * Buscar Relatorio de Veículos ativos por período
+	 *
+   * @param inicio
+   * @param fim
+	 * @return Observable<Blob>
+	 */
+  public buscarRelatorioVeiculosAtivos(inicio: Date, fim: Date): Observable<Blob> {
+    let params = new HttpParams().set('inicio', Utils.converterDataParaString(inicio));
+    params = params.set('fim', Utils.converterDataParaString(fim));
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+      params: params
+    };
+    return this.http.get<Blob>(
+      this.courartApiUrl + PATH + '/relatorio',
+      httpOptions
+    );
   }
 
 

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lancamentos-por-pessoa" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="58acf290-79bc-4138-8b10-a72f7a0d1323">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="DT_INICIO" class="java.util.Date"/>
+	<parameter name="DT_FIM" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="placa" class="java.lang.String"/>
+	<field name="dataCadastro" class="java.time.LocalDate"/>
+	<field name="chassi" class="java.lang.String"/>
+	<field name="anoFabricacao" class="java.lang.String"/>
+	<field name="anoModelo" class="java.lang.String"/>
+	<field name="modelo" class="java.lang.String"/>
+	<field name="consumoMedio" class="java.math.BigDecimal"/>
+	<field name="quantidadePassageiros" class="java.lang.Integer"/>
+	<title>
+		<band height="73" splitType="Stretch">
+			<textField>
+				<reportElement x="11" y="36" width="779" height="30" uuid="4c0dc64f-1b05-4145-a713-4d57089e6f8b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Período:  " + DATEFORMAT($P{DT_INICIO}, "dd/MM/yyyy") + " até " + DATEFORMAT($P{DT_FIM}, "dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="3" width="779" height="30" uuid="4545beba-7494-4bd9-90e0-d69c30d53b67"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Veículos Ativos"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="800" height="25" backcolor="#D4D4D4" uuid="6286af83-11eb-4a4f-811c-7f1ff4d3dc46"/>
+			</rectangle>
+			<line>
+				<reportElement x="105" y="0" width="1" height="25" uuid="57a07db4-d370-440d-889c-2d451fae5c70"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="1" width="105" height="23" uuid="4e3327e0-a0b5-4bf4-96f0-0be06a48d412"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Data de Cadastro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="1" width="74" height="23" uuid="2731a6ea-556b-47e6-95ff-909ee28bad4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Placa]]></text>
+			</staticText>
+			<line>
+				<reportElement x="182" y="0" width="1" height="24" uuid="639d5a73-8c4f-43c7-9d40-1bced668d448"/>
+			</line>
+			<line>
+				<reportElement x="379" y="0" width="1" height="24" uuid="dae1cf15-be09-405c-967e-f47bce6a7688"/>
+			</line>
+			<staticText>
+				<reportElement x="183" y="1" width="196" height="23" uuid="35f4d0cd-fc87-4bd8-b19b-d4d91b60fbc3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Chassi]]></text>
+			</staticText>
+			<line>
+				<reportElement x="440" y="0" width="1" height="25" uuid="7fc0d0a9-bd7b-464c-9f67-5a5d2f986586"/>
+			</line>
+			<staticText>
+				<reportElement x="380" y="1" width="60" height="23" uuid="76450c52-ba31-4c44-8239-2d84c3848d82"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Ano Fab.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="496" y="0" width="1" height="25" uuid="2bc1f25d-fed5-4867-a5fa-8ab9e38bf9c5"/>
+			</line>
+			<staticText>
+				<reportElement x="441" y="1" width="55" height="23" uuid="81895f00-8571-46ee-b5e5-516c6bf9a4cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Ano Mod.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="580" y="0" width="1" height="25" uuid="7e39b194-0f10-4f15-9cbc-b7f1c9ed93f1"/>
+			</line>
+			<staticText>
+				<reportElement x="497" y="1" width="83" height="23" uuid="562b168c-c3d7-403b-a45f-3feb76ce82ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Modelo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="670" y="0" width="1" height="25" uuid="be51b2b9-1d51-4ae7-a8b4-c3c1a7f670a3"/>
+			</line>
+			<staticText>
+				<reportElement x="580" y="1" width="90" height="23" uuid="2d5e83d2-b43c-44bf-8af9-ac3b0e187127"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Consumo Médio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="670" y="1" width="130" height="23" uuid="0908518b-5530-4296-a732-940136247d3f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Qtde Passageiros]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="1" height="25" uuid="97b64cbd-bf37-42ab-b44f-598d19309f0c"/>
+			</line>
+			<line>
+				<reportElement x="105" y="0" width="1" height="25" uuid="ad4cdbf3-6af5-44c2-9260-74a0f5417bdd"/>
+			</line>
+			<line>
+				<reportElement x="800" y="0" width="1" height="25" uuid="0425291a-62a8-41aa-81de-ccbafca0c581"/>
+			</line>
+			<line>
+				<reportElement x="0" y="25" width="800" height="1" uuid="50d4b333-1e55-411f-8ea1-b9e4e5eeb527"/>
+			</line>
+			<textField>
+				<reportElement x="110" y="4" width="70" height="16" uuid="78e20df3-aae5-42c3-9df6-75bff851fc71">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fb9ffd17-49d5-4474-980c-c5574e9038a8"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{placa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="4" width="90" height="16" uuid="4863675e-5cb9-42b6-8fe8-c69541f41f04">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22b3c748-9267-4b82-b94c-a8f63dc6e71b"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[DATEFORMAT(java.util.Date.from($F{dataCadastro}.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant()), "dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="182" y="-1" width="1" height="26" uuid="9723ce98-bfc9-4673-85d4-f373dc35c876"/>
+			</line>
+			<line>
+				<reportElement x="379" y="-1" width="1" height="26" uuid="20583e25-a1c8-4925-af94-723c64c3d1d1"/>
+			</line>
+			<line>
+				<reportElement x="440" y="1" width="1" height="24" uuid="0711df88-213b-42b5-874c-ea324e5874ca"/>
+			</line>
+			<line>
+				<reportElement x="440" y="0" width="1" height="26" uuid="8faea0a8-c601-48fa-82db-f39efe93c8e1"/>
+			</line>
+			<line>
+				<reportElement x="496" y="0" width="1" height="26" uuid="619faf51-54cf-4b06-9e75-8985dff238b7"/>
+			</line>
+			<line>
+				<reportElement x="580" y="0" width="1" height="25" uuid="7a987710-368a-4b20-8242-b9d9721f1e80"/>
+			</line>
+			<line>
+				<reportElement x="580" y="0" width="1" height="26" uuid="a5acc58c-7d94-47b5-9e17-f94a9c12a875"/>
+			</line>
+			<line>
+				<reportElement x="670" y="0" width="1" height="25" uuid="6cdc9729-a69c-4722-a5a6-a92c014c9493"/>
+			</line>
+			<line>
+				<reportElement x="670" y="0" width="1" height="26" uuid="7e7783f8-32ac-41e6-8ec1-847ec621cdc6"/>
+			</line>
+			<textField>
+				<reportElement x="183" y="3" width="195" height="19" uuid="63bc221b-546d-4545-b880-da7038608bc8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e76566a-edb6-4b14-8060-1b34b37bcca9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{chassi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="3" width="50" height="19" uuid="7c0b4a17-af2e-47db-af37-eb9a1c4cc63c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a5928b60-9f17-4a8b-940e-81e9a6c888f2"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{anoFabricacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="3" width="50" height="19" uuid="63685582-3443-40d2-aff9-0ffffbd44d0f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9c71505-3bf4-4cbe-a89c-a720294fbac1"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{anoModelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="3" width="80" height="19" uuid="87872e88-2eca-4b3b-83ba-f9528d2a6df7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7c9ce8ca-ee26-4981-8f8c-7ef0c0cfcec0"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="585" y="3" width="80" height="19" uuid="934a99ab-a429-4f90-b495-92cea903bd4a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2181ced8-3713-4ca3-9ea1-74d36ee111a5"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{consumoMedio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="680" y="3" width="110" height="19" uuid="8e55d8c4-bfed-48a3-a720-4d5aac4d3848">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="afb918ad-1500-42a1-a3a8-2622178ead50"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{quantidadePassageiros}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="38" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="6" width="140" height="25" uuid="51868060-3978-478a-be3c-c7f2b21939fb"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Barbacena,  " + DATEFORMAT(TODAY(), "dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="701" y="6" width="100" height="25" uuid="ab1c2327-7749-4f1c-9322-86b1698276ca"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

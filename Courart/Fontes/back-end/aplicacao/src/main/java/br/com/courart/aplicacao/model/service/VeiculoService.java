@@ -1,8 +1,13 @@
 package br.com.courart.aplicacao.model.service;
 
+import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.courart.aplicacao.model.Veiculo;
 import br.com.courart.aplicacao.model.dao.VeiculoDao;
 import br.com.courart.aplicacao.model.enums.AtivoEnum;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -119,6 +129,35 @@ public class VeiculoService implements Serializable {
 		} catch (Exception e) {
 			throw new EmptyResultDataAccessException(1);
 		}
+	}
+	
+	/**
+	 * Gerar relatório de todos os Veiculos ativos por período
+	 * 
+	 * @param inicio
+	 * @param fim
+	 * @return List<Funcionario>
+	 */
+	@Transactional(readOnly=true)
+	public byte[] buscarVeiculosAtivos(LocalDate inicio, LocalDate fim) throws JRException {
+		List<Veiculo> dados = veiculoDao.buscarVeiculosAtivos(inicio, fim);
+		
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("DT_INICIO", Date.valueOf(inicio));
+		parametros.put("DT_FIM", Date.valueOf(fim));
+		parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
+		//Colocando traço na placa de acordo com o formato AAA-9999
+		for (Veiculo veiculo : dados) {
+			veiculo.setPlaca(veiculo.getPlaca().substring(0, 3) + "-" + veiculo.getPlaca().substring(3, 7));
+		}
+		InputStream inputStream = this.getClass().getResourceAsStream(
+				"/relatorios/veiculos-ativados.jasper");
+		
+		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros,
+				new JRBeanCollectionDataSource(dados));
+		
+		return JasperExportManager.exportReportToPdf(jasperPrint);
+
 	}
 
 }
