@@ -1,3 +1,4 @@
+import { Utils } from './../../util/utils';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -194,6 +195,29 @@ export class FuncionarioService {
         this.erroHandlerService.handle(err);
       });
       return data;
+  }
+
+  /**
+	 * Buscar Relatorio de aniversariantes por periodo
+	 *
+   * @param inicio
+   * @param fim
+	 * @return Observable<Blob>
+	 */
+  public buscarRelatorioAniversariantes(inicio: Date, fim: Date): Observable<Blob> {
+    let params = new HttpParams().set('inicio', Utils.converterDataParaString(inicio));
+    params = params.set('fim', Utils.converterDataParaString(fim));
+    console.log(params);
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+      params: params
+    };
+    return this.http.get<Blob>(
+      this.courartApiUrl + PATH + '/relatorio',
+      httpOptions
+    );
+
+
   }
 
 

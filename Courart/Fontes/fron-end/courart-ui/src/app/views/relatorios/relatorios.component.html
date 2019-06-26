@@ -2,12 +2,13 @@
   <mat-card class="matcard-container">
     <h4 class="box-title fonte">Relatório Fucionário - Aniversáriantes por Período:</h4>
     <br>
-    <form #form="ngForm">
+    <form #formFuncionario="ngForm">
       <div class="row form-group">
 
         <div class="col-md-4">
           <mat-form-field>
-            <input matInput [matDatepicker]="dataInicialFunc" placeholder="Data Inicial">
+            <input matInput [matDatepicker]="dataInicialFunc" placeholder="Data Inicial"
+            [(ngModel)]="dataInicialFuncionario" name="dataInicialFuncionario">
             <mat-datepicker-toggle matSuffix [for]="dataInicialFunc"></mat-datepicker-toggle>
             <mat-datepicker #dataInicialFunc></mat-datepicker>
           </mat-form-field>
@@ -15,7 +16,8 @@
 
         <div class="col-md-4">
           <mat-form-field>
-            <input matInput [matDatepicker]="dataFinalFunc" placeholder="Data Final">
+            <input matInput [matDatepicker]="dataFinalFunc" placeholder="Data Final"
+            [(ngModel)]="dataFinalFuncionario"  name="dataFinalFuncionario" >
             <mat-datepicker-toggle matSuffix [for]="dataFinalFunc"></mat-datepicker-toggle>
             <mat-datepicker #dataFinalFunc></mat-datepicker>
           </mat-form-field>
@@ -23,39 +25,43 @@
       </div>
 
       <div class=" pull-left">
-        <button mat-raised-button color="primary" (click)="salvarFuncionario(form)"
-        [disabled]="form.invalid">Gerar Relatório</button>
+        <button mat-raised-button color="primary" (click)="buscarRelatorioAniversariantes()"
+        [disabled]="formFuncionario.invalid">Gerar Relatório</button>
       </div>
     </form>
   </mat-card>
+
   <mat-card class="matcard-container">
-    <h4 class="box-title fonte">Relatório Veículo - Veículos Ativos por Período:</h4>
+    <h4 class="box-title fonte">Relatório Fucionário - Aniversáriantes por Período:</h4>
     <br>
-    <form #form="ngForm">
+    <form #formVeiculo="ngForm">
       <div class="row form-group">
 
         <div class="col-md-4">
           <mat-form-field>
-            <input matInput [matDatepicker]="dataIncialVeiculo" placeholder="Data Inicial">
-            <mat-datepicker-toggle matSuffix [for]="dataIncialVeiculo"></mat-datepicker-toggle>
-            <mat-datepicker #dataIncialVeiculo></mat-datepicker>
+            <input matInput [matDatepicker]="dataInicialV" placeholder="Data Inicial"
+            [(ngModel)]="dataInicialVeiculo" name="dataInicialVeiculo">
+            <mat-datepicker-toggle matSuffix [for]="dataInicialV"></mat-datepicker-toggle>
+            <mat-datepicker #dataInicialV></mat-datepicker>
           </mat-form-field>
         </div>
 
         <div class="col-md-4">
           <mat-form-field>
-            <input matInput [matDatepicker]="dataFinalVeiculo" placeholder="Data Final">
-            <mat-datepicker-toggle matSuffix [for]="dataFinalVeiculo"></mat-datepicker-toggle>
-            <mat-datepicker #dataFinalVeiculo></mat-datepicker>
+            <input matInput [matDatepicker]="dataFinalV" placeholder="Data Final"
+            [(ngModel)]="dataFinalVeiculo"  name="dataFinalVeiculo" >
+            <mat-datepicker-toggle matSuffix [for]="dataFinalV"></mat-datepicker-toggle>
+            <mat-datepicker #dataFinalV></mat-datepicker>
           </mat-form-field>
         </div>
       </div>
 
       <div class=" pull-left">
-        <button mat-raised-button color="primary" (click)="salvarFuncionario(form)"
-        [disabled]="form.invalid">Gerar Relatório</button>
+        <button mat-raised-button color="primary" (click)="buscarRelatorioAniversariantes()"
+        [disabled]="formVeiculo.invalid">Gerar Relatório</button>
       </div>
     </form>
   </mat-card>
+
 
 </div>
