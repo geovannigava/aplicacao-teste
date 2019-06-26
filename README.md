@@ -10,4 +10,4 @@ Exemplo da utilização das Tecnologias:
 
 Servidor de aplicação utilizado: Apache Tomcat
 
-Aplicação disponível em : http://104.248.2.184:8080/atividades
+Aplicação disponível em : http://104.248.2.184:8080/courart/#/home
