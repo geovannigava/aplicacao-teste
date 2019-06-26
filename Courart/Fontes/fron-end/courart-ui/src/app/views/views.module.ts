@@ -19,7 +19,7 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { VeiculoService } from '../services/veiculo/veiculo.service';
 import { HomeComponent } from './home/home.component';
 
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
+
 
 @NgModule({
   declarations: [
@@ -52,7 +52,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     MatNativeDateModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxMaskModule.forRoot(options),
+    NgxMaskModule.forRoot(),
     MatSnackBarModule,
     MatDialogModule
   ],

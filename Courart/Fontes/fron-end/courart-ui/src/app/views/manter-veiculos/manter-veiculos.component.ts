@@ -2,7 +2,7 @@ import { MatTableDataSource, MatSnackBar, MatDialog, MatPaginator } from '@angul
 import { FormControl } from '@angular/forms';
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 
-import { SelectStatus } from './../../models/enums/atividade-enum';
+import { SelectStatus, AtivoEnum } from './../../models/enums/atividade-enum';
 import { Veiculo } from './../../models/veiculo';
 import { VeiculoService } from '../../services/veiculo/veiculo.service';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
@@ -27,6 +27,7 @@ export class ManterVeiculosComponent implements OnInit {
     { value: 'SIM', viewValue: 'Sim' },
     { value: 'NAO', viewValue: 'Não' }
   ];
+  selected = 'SIM';
 
   displayedColumns: string[] = ['idVeiculo', 'placa', 'chassi', 'anoFabricacao', 'anoModelo',
   'ativoEnum', 'modelo', 'cor', 'consumoMedio', 'quantidadePassageiros', 'dataCadastro',
@@ -35,21 +36,22 @@ export class ManterVeiculosComponent implements OnInit {
 
   ngOnInit() {
     this.buscarTodosVeiculos();
+   // this.veiculo.ativoEnum = 0;
     this.veiculo.quantidadePassageiros = 4;
   }
 
-  private resetarForm(form: FormControl){
+  public resetarForm(form: FormControl){
     this.veiculo = new Veiculo();
     form.reset();
   }
 
-  abrirBarraAviso(message: string, action: string) {
+  private abrirBarraAviso(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 3000,
     });
   }
 
-  private buscarTodosVeiculos() {
+  public buscarTodosVeiculos() {
     this.veiculoService.listarTodos().subscribe( (retorno: Veiculo[]) => {
       this.dataSource = new MatTableDataSource<Veiculo>(retorno);
       this.dataSource.paginator = this.paginator;
@@ -57,7 +59,7 @@ export class ManterVeiculosComponent implements OnInit {
     this.changeDetectorRefs.detectChanges();
   }
 
-  private salvarFuncionario(form: FormControl){
+  public salvarFuncionario(form: FormControl){
     let funcionarioSalvo: Veiculo;
     //this.veiculo.ativoEnum = tipoStatusSelecionado;
     this.veiculoService.salvar(this.veiculo).subscribe( (retorno: Veiculo) => {
@@ -70,13 +72,13 @@ export class ManterVeiculosComponent implements OnInit {
     form.reset();
   }
 
-  private selecionarVeiculo(idVeiculo: number) {
+  public selecionarVeiculo(idVeiculo: number) {
     this.veiculoService.buscarPorId(idVeiculo).subscribe( (retorno: Veiculo) => {
       this.veiculo = retorno;
     });
   }
 
-  private atualizarVeiculo(veiculoAtualizado: Veiculo, form: FormControl){
+  public atualizarVeiculo(veiculoAtualizado: Veiculo, form: FormControl){
     let veiculoSalvo: Veiculo;
     this.veiculoService.atualizar(veiculoAtualizado).subscribe( (retorno: Veiculo) => {
       veiculoSalvo = retorno;
@@ -88,7 +90,7 @@ export class ManterVeiculosComponent implements OnInit {
     form.reset();
   }
 
-  dialogoConfirmacaoExclusao(idVeiculo: number): void {
+  public dialogoConfirmacaoExclusao(idVeiculo: number): void {
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '250px',
       data: {}
@@ -101,7 +103,7 @@ export class ManterVeiculosComponent implements OnInit {
 
 }
 
-private excluirVeiculo(idVeiculo: number){
+public excluirVeiculo(idVeiculo: number){
   this.veiculoService.remover(idVeiculo).subscribe( (retorno: Boolean) => {
     if(retorno){
       this.abrirBarraAviso('Veículo Excluído.', 'Sucesso');
@@ -111,7 +113,7 @@ private excluirVeiculo(idVeiculo: number){
   });
 }
 
-private buscarPorPlaca(){
+public buscarPorPlaca(){
   if(this.placaBusca != null){
     if(this.placaBusca.length > 1){
       this.veiculoService.listarPorPlaca(this.placaBusca).subscribe( (retorno: Veiculo[]) => {
@@ -122,7 +124,7 @@ private buscarPorPlaca(){
   }
 }
 
-private buscarPorModelo(){
+public buscarPorModelo(){
   if(this.modeloBusca != null){
     if(this.modeloBusca.length > 1){
       this.veiculoService.listarPorModelo(this.modeloBusca).subscribe( (retorno: Veiculo[]) => {

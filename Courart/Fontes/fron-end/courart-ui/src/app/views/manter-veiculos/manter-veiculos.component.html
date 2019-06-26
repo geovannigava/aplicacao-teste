@@ -39,7 +39,8 @@
 
         <div class="col-md-2">
           <mat-form-field>
-            <mat-select placeholder="Ativo ?" [(value)]="veiculo.ativoEnum" required>
+            <mat-select placeholder="Ativo ?" [(ngModel)]="veiculo.ativoEnum" name="select" required
+            [(value)]="selected">
               <mat-option *ngFor="let tp of tipoStatus" [value]="tp.value">
                 {{tp.viewValue}}
               </mat-option>

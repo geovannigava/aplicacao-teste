@@ -20,7 +20,7 @@ export class RelatoriosComponent implements OnInit {
   ngOnInit() {
   }
 
-  private buscarRelatorioAniversariantes(){
+  public buscarRelatorioAniversariantes(){
     this.funcionarioService.buscarRelatorioAniversariantes(this.dataInicialFuncionario, this.dataFinalFuncionario)
     .subscribe(response => {
       var file = new Blob([response], { type: 'application/pdf' });
@@ -29,14 +29,14 @@ export class RelatoriosComponent implements OnInit {
     });
 }
 
-private buscarRelatorioVeiculosAtivos(){
-  console.log(this.dataInicialVeiculo);
-  this.veiculoService.buscarRelatorioVeiculosAtivos(this.dataInicialVeiculo, this.dataFinalVeiculo)
-  .subscribe(response => {
-    var file = new Blob([response], { type: 'application/pdf' });
-    var fileURL = URL.createObjectURL(file);
-    window.open(fileURL);
-  });
+  public buscarRelatorioVeiculosAtivos(){
+    console.log(this.dataInicialVeiculo);
+    this.veiculoService.buscarRelatorioVeiculosAtivos(this.dataInicialVeiculo, this.dataFinalVeiculo)
+    .subscribe(response => {
+      var file = new Blob([response], { type: 'application/pdf' });
+      var fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    });
 }
 
 }

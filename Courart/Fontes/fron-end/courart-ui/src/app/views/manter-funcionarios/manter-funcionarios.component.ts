@@ -40,7 +40,7 @@ export class ManterFuncionariosComponent implements OnInit {
     });
   }
 
-  private buscarTodosFuncionarios() {
+  public buscarTodosFuncionarios() {
     this.funcionarioService.listarTodos().subscribe( (retorno: Funcionario[]) => {
       this.funcionarios = retorno;
       this.dataSource = new MatTableDataSource<Funcionario>(retorno);
@@ -50,7 +50,7 @@ export class ManterFuncionariosComponent implements OnInit {
     this.changeDetectorRefs.detectChanges();
   }
 
-  private salvarFuncionario(form: FormControl){
+  public salvarFuncionario(form: FormControl){
     let funcionarioSalvo: Funcionario;
     this.funcionario.dataNascimento = Utils.converterDataParaString(this.dataTemp);
     this.funcionarioService.salvar(this.funcionario).subscribe( (retorno: Funcionario) => {
@@ -63,14 +63,14 @@ export class ManterFuncionariosComponent implements OnInit {
     form.reset();
   }
 
-  private selecionarFuncionario(idFuncionario: number){
+  public selecionarFuncionario(idFuncionario: number){
     this.funcionarioService.buscarPorId(idFuncionario).subscribe( (retorno: Funcionario) => {
       this.funcionario = retorno;
       this.dataTemp = Utils.converterStringParaData(this.funcionario.dataNascimento);
     });
   }
 
-  private atualizarFuncionario(funcionarioAtualizado: Funcionario, form: FormControl){
+  public atualizarFuncionario(funcionarioAtualizado: Funcionario, form: FormControl){
     let funcionarioSalvo: Funcionario;
     funcionarioAtualizado.dataNascimento = Utils.converterDataParaString(this.dataTemp);
     this.funcionarioService.atualizar(funcionarioAtualizado).subscribe( (retorno: Funcionario) => {
@@ -83,7 +83,7 @@ export class ManterFuncionariosComponent implements OnInit {
     form.reset();
   }
 
-  dialogoConfirmacaoExclusao(idFuncionario: number): void {
+  public dialogoConfirmacaoExclusao(idFuncionario: number): void {
       const dialogRef = this.dialog.open(DialogBoxComponent, {
         width: '250px',
         data: {}
@@ -96,7 +96,7 @@ export class ManterFuncionariosComponent implements OnInit {
 
   }
 
-  private excluirFuncionario(idFuncionario: number){
+  public excluirFuncionario(idFuncionario: number){
     this.funcionarioService.remover(idFuncionario).subscribe( (retorno: Boolean) => {
       if(retorno){
         this.abrirBarraAviso('Funcionário Excluído.', 'Sucesso');
@@ -106,7 +106,7 @@ export class ManterFuncionariosComponent implements OnInit {
     });
   }
 
-  private buscarPorNomeOuParte(){
+  public buscarPorNomeOuParte(){
     if(this.nomeOuParte != null){
       if(this.nomeOuParte.length > 1){
         this.funcionarioService.listarPorNome(this.nomeOuParte).subscribe( (retorno: Funcionario[]) => {
@@ -118,7 +118,7 @@ export class ManterFuncionariosComponent implements OnInit {
     }
   }
 
-  private buscarPorCpf(){
+  public buscarPorCpf(){
     if(this.cpfBusca != null){
       if(this.cpfBusca.length > 1){
         this.funcionarioService.listarPorCpf(this.cpfBusca).subscribe( (retorno: Funcionario[]) => {
@@ -130,7 +130,7 @@ export class ManterFuncionariosComponent implements OnInit {
     }
   }
 
-  private resetarForm(form: FormControl){
+  public resetarForm(form: FormControl){
     this.funcionario = new Funcionario();
     form.reset();
   }
