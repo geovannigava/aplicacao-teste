@@ -1,0 +1,17 @@
+Para facilitar o deploy da aplicação já gerei o .WAR do back-end e o build do front end.
+
+1 - Criar usuário no banco de dados postgres:
+
+usuario: gava
+senha: gava
+
+2 - Criar Banco de dados com o Nome: courart-teste
+
+3 - Colocar o .war e a pasta courart-ui em um servidor de aplicação, por exemplo, tomcat. 
+
+O WAR já esta configurado para acessar o banco em localhost:5432/courart-teste usando usuario e senha gava.
+
+
+Caso queira gerar um novo WAR para o projeto com o comando: mvn clean install, as configuraçoes para acesso ao banco de dados estao em: resources/application.properties
+
+OBS: é importante renomear o .war para courart-api.war pois o front-end está fazendo as chamadas usando esse context path. 
