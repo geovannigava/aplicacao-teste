@@ -12,6 +12,8 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +42,8 @@ public class VeiculoService implements Serializable {
 	 * @param placa
 	 * @return List<Veiculo>
 	 */
-	public List<Veiculo> buscarPorPlaca(String placa){
-		return veiculoDao.buscarPorPlaca(placa.toUpperCase());
+	public Page<Veiculo> buscarPorPlaca(String placa, Pageable pageable){
+		return veiculoDao.buscarPorPlaca(placa.toUpperCase(), pageable);
 	}
 	
 	/**
@@ -50,8 +52,8 @@ public class VeiculoService implements Serializable {
 	 * @param modelo
 	 * @return List<Veiculo>
 	 */
-	public List<Veiculo> buscarPorModelo(String modelo){
-		return veiculoDao.buscarPorModelo(modelo.toUpperCase());
+	public Page<Veiculo> buscarPorModelo(String modelo, Pageable pageable){
+		return veiculoDao.buscarPorModelo(modelo.toUpperCase(), pageable);
 	}
 
 	/**
@@ -74,11 +76,12 @@ public class VeiculoService implements Serializable {
 
 	/**
 	 * Listar Todos os Veículo.
+	 * @param pageable 
 	 * 
 	 * @return List<Veiculo>
 	 */
-	public List<Veiculo> listarTodos() {
-		return veiculoDao.listarTodos();
+	public Page<Veiculo> listarTodos(Pageable pageable) {
+		return veiculoDao.listarTodos(pageable);
 	}
 
 	/**

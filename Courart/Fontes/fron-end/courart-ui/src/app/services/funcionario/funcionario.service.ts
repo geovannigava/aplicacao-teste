@@ -1,3 +1,4 @@
+import { Paginacao } from './../../models/paginacao/paginacao';
 import { Utils } from './../../util/utils';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -33,8 +34,10 @@ export class FuncionarioService {
 	 *
 	 * @return Observable<any>
 	 */
-  public listarTodos(): Observable<any> {
+  public listarTodos(funcionarioPaginacao: Paginacao): Observable<any> {
     let params = new HttpParams();
+    params = params.set('page', funcionarioPaginacao.page != null ? funcionarioPaginacao.page.toString() : '')
+    .set('size', funcionarioPaginacao.size != null ? funcionarioPaginacao.size.toString() : '');
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
     this.http.get(this.courartApiUrl + PATH, {
@@ -155,8 +158,10 @@ export class FuncionarioService {
    * @param nome
 	 * @return Observable<any>
 	 */
-  public listarPorNome(nome: string): Observable<any> {
+  public listarPorNome(nome: string, funcionarioPaginacao: Paginacao): Observable<any> {
     let params = new HttpParams();
+    params = params.set('page', funcionarioPaginacao.page != null ? funcionarioPaginacao.page.toString() : '')
+    .set('size', funcionarioPaginacao.size != null ? funcionarioPaginacao.size.toString() : '');
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
     this.http.get(this.courartApiUrl + PATH + `/buscarPorNome/${nome}`, {
@@ -179,8 +184,10 @@ export class FuncionarioService {
    * @param cpf
 	 * @return Observable<any>
 	 */
-  public listarPorCpf(cpf: string): Observable<any> {
+  public listarPorCpf(cpf: string,  funcionarioPaginacao: Paginacao): Observable<any> {
     let params = new HttpParams();
+    params = params.set('page', funcionarioPaginacao.page != null ? funcionarioPaginacao.page.toString() : '')
+    .set('size', funcionarioPaginacao.size != null ? funcionarioPaginacao.size.toString() : '');
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
     this.http.get(this.courartApiUrl + PATH + `/buscarPorCpf/${cpf}`, {

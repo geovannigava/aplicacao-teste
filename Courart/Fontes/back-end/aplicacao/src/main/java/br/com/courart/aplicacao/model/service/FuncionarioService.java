@@ -12,6 +12,8 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,8 +43,8 @@ public class FuncionarioService implements Serializable {
 	 * @param nome
 	 * @return List<Funcionario>
 	 */
-	public List<Funcionario> buscarPorNome(String nome) {
-		return funcionarioDao.buscarPorNome(nome.toUpperCase());
+	public Page<Funcionario> buscarPorNome(String nome, Pageable pageable) {
+		return funcionarioDao.buscarPorNome(nome.toUpperCase(), pageable);
 	}
 	
 	/**
@@ -51,8 +53,8 @@ public class FuncionarioService implements Serializable {
 	 * @param cpf
 	 * @return List<Funcionario>
 	 */
-	public List<Funcionario> buscarPorCpf(String cpf) {
-		return funcionarioDao.buscarPorCpf(cpf);
+	public Page<Funcionario> buscarPorCpf(String cpf, Pageable pageable) {
+		return funcionarioDao.buscarPorCpf(cpf, pageable);
 	}
 
 	/**
@@ -71,8 +73,8 @@ public class FuncionarioService implements Serializable {
 	 * 
 	 * @return List<Funcionario>
 	 */
-	public List<Funcionario> listarTodos() {
-		return funcionarioDao.listarTodos();
+	public Page<Funcionario> listarTodos(Pageable pageable) {
+		return funcionarioDao.listarTodos(pageable);
 	}
 
 	/**

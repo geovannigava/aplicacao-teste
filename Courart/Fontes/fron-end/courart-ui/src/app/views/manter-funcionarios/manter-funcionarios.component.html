@@ -7,8 +7,7 @@
         <div class="col-md-6">
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Nome" value="Digite o Nome" name="nome"
-            [(ngModel)]="funcionario.nome" #nome="ngModel"
-              required>
+            [(ngModel)]="funcionario.nome" #nome="ngModel" required>
           </mat-form-field>
         </div>
 
@@ -46,8 +45,6 @@
           </div>
       </div>
 
-
-
     <div *ngIf="!funcionario.idFuncionario" class=" pull-left">
     <button mat-raised-button color="primary" (click)="salvarFuncionario(form)"
     [disabled]="form.invalid">Cadastrar Funcionário</button>
@@ -74,7 +71,7 @@
           <mat-form-field >
               <input matInput placeholder="Consulta por Nome"
               [(ngModel)]="nomeOuParte" name="nomeOuParte">
-              <mat-icon matSuffix (click)="buscarPorNomeOuParte()"
+              <mat-icon matSuffix (click)="onBuscar('NOMEOUPARTE')"
               class="pointer">search</mat-icon>
             </mat-form-field>
       </div>
@@ -82,7 +79,7 @@
           <mat-form-field >
               <input matInput placeholder="Consulta por CPF" mask="000.000.000-00"
               [(ngModel)]="cpfBusca" name="cpfBusca">
-              <mat-icon matSuffix (click)="buscarPorCpf()" class="pointer">search</mat-icon>
+              <mat-icon matSuffix (click)="onBuscar('CPF')" class="pointer">search</mat-icon>
             </mat-form-field>
       </div>
     </div>
@@ -92,11 +89,11 @@
   <mat-card class="matcard-container">
       <h4 class="box-title fonte" >Funcionários:</h4>
       <div class="bottom-right">
-          <button mat-raised-button color="primary" (click)="buscarTodosFuncionarios()"
+          <button mat-raised-button color="primary" (click)="onBuscar('TODOS')"
           > Buscar Todos</button>
       </div>
       <br>
-      <table mat-table [dataSource]="dataSource" class="example-full-width">
+      <table mat-table [dataSource]="funcionarios" class="example-full-width">
 
           <ng-container matColumnDef="idFuncionario">
             <th mat-header-cell *matHeaderCellDef> <b>No.</b>  </th>
@@ -149,7 +146,14 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  </mat-card>
+        <mat-paginator #paginator class="full-width"
+          [length]="funcionarioPaginacao.totalElements"
+          [pageIndex]="funcionarioPaginacao.page"
+          [pageSize]="funcionarioPaginacao.size"
+          [pageSizeOptions]="[5, 10, 20, 50]"
+          (page)="onPaginator()">
+        </mat-paginator>
+
+      </mat-card>
 
 </div>

@@ -1,11 +1,12 @@
 import { MatTableDataSource, MatSnackBar, MatDialog, MatPaginator } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, SimpleChanges } from '@angular/core';
 
 import { SelectStatus, AtivoEnum } from './../../models/enums/atividade-enum';
 import { Veiculo } from './../../models/veiculo';
 import { VeiculoService } from '../../services/veiculo/veiculo.service';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
+import { Paginacao } from 'src/app/models/paginacao/paginacao';
 
 @Component({
   selector: 'app-manter-veiculos',
@@ -19,25 +20,65 @@ export class ManterVeiculosComponent implements OnInit {
     public snackBar: MatSnackBar,
     public dialog: MatDialog) { }
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  veiculoPaginacao = new Paginacao();
   veiculo = new Veiculo();
+  veiculos = [];
   placaBusca: string;
   modeloBusca: string;
+  tipoBusca = 'TODOS';
   tipoStatus: SelectStatus[] = [
     { value: 'SIM', viewValue: 'Sim' },
     { value: 'NAO', viewValue: 'Não' }
   ];
-  selected = 'SIM';
+
 
   displayedColumns: string[] = ['idVeiculo', 'placa', 'chassi', 'anoFabricacao', 'anoModelo',
   'ativoEnum', 'modelo', 'cor', 'consumoMedio', 'quantidadePassageiros', 'dataCadastro',
   'dataDesativacao', 'editar', 'excluir'];
-  dataSource: MatTableDataSource<Veiculo>;
+
 
   ngOnInit() {
-    this.buscarTodosVeiculos();
-   // this.veiculo.ativoEnum = 0;
+    this.veiculoPaginacao.page = 0;
+    this.veiculoPaginacao.size = 5;
     this.veiculo.quantidadePassageiros = 4;
+    this.buscarTodosVeiculos();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.veiculoPaginacao.size = this.paginator.pageSize != undefined ? this.paginator.pageSize : this.veiculoPaginacao.size;
+    if(this.tipoBusca == 'TODOS'){
+      this.buscarTodosVeiculos();
+    } else if(this.tipoBusca == 'PLACA'){
+      this.buscarPorPlaca();
+    } else {
+      this.buscarPorModelo();
+    }
+  }
+
+  onPaginator(){
+    this.veiculoPaginacao.page = this.paginator.pageIndex;
+    this.veiculoPaginacao.size = this.paginator.pageSize != undefined ? this.paginator.pageSize : this.veiculoPaginacao.size;
+
+    if(this.tipoBusca == 'TODOS'){
+      this.buscarTodosVeiculos();
+    } else if(this.tipoBusca == 'PLACA'){
+      this.buscarPorPlaca();
+    } else {
+      this.buscarPorModelo();
+    }
+  }
+
+  public onBuscar(tipoBusca: string) {
+    this.tipoBusca = tipoBusca;
+    this.veiculoPaginacao.page = 0;
+    if(this.tipoBusca == 'TODOS'){
+      this.buscarTodosVeiculos();
+    } else if(this.tipoBusca == 'PLACA'){
+      this.buscarPorPlaca();
+    } else {
+      this.buscarPorModelo();
+    }
   }
 
   public resetarForm(form: FormControl){
@@ -51,20 +92,11 @@ export class ManterVeiculosComponent implements OnInit {
     });
   }
 
-  public buscarTodosVeiculos() {
-    this.veiculoService.listarTodos().subscribe( (retorno: Veiculo[]) => {
-      this.dataSource = new MatTableDataSource<Veiculo>(retorno);
-      this.dataSource.paginator = this.paginator;
-    });
-    this.changeDetectorRefs.detectChanges();
-  }
-
-  public salvarFuncionario(form: FormControl){
-    let funcionarioSalvo: Veiculo;
-    //this.veiculo.ativoEnum = tipoStatusSelecionado;
+  public salvarVeiculo(form: FormControl){
+    let veiculoSalvo: Veiculo;
     this.veiculoService.salvar(this.veiculo).subscribe( (retorno: Veiculo) => {
-      funcionarioSalvo = retorno;
-      if(funcionarioSalvo.idVeiculo != null){
+      veiculoSalvo = retorno;
+      if(veiculoSalvo.idVeiculo != null){
         this.abrirBarraAviso('Veículo Criado.', 'Sucesso');
         this.buscarTodosVeiculos();
       }
@@ -113,12 +145,23 @@ public excluirVeiculo(idVeiculo: number){
   });
 }
 
+public buscarTodosVeiculos() {
+  this.veiculoService.listarTodos(this.veiculoPaginacao).subscribe( (retorno) => {
+    this.veiculos = retorno.content;
+    this.veiculoPaginacao.totalElements = retorno.totalElements;
+    this.veiculo = new Veiculo();
+  });
+  this.changeDetectorRefs.detectChanges();
+}
+
+
 public buscarPorPlaca(){
   if(this.placaBusca != null){
     if(this.placaBusca.length > 1){
-      this.veiculoService.listarPorPlaca(this.placaBusca).subscribe( (retorno: Veiculo[]) => {
-        this.dataSource = new MatTableDataSource<Veiculo>(retorno);
-        this.dataSource.paginator = this.paginator;
+      this.veiculoService.listarPorPlaca(this.placaBusca, this.veiculoPaginacao).subscribe( (retorno) => {
+        this.veiculos = retorno.content;
+        this.veiculoPaginacao.totalElements = retorno.totalElements;
+        this.veiculo = new Veiculo();
       });
     }
   }
@@ -127,9 +170,10 @@ public buscarPorPlaca(){
 public buscarPorModelo(){
   if(this.modeloBusca != null){
     if(this.modeloBusca.length > 1){
-      this.veiculoService.listarPorModelo(this.modeloBusca).subscribe( (retorno: Veiculo[]) => {
-        this.dataSource = new MatTableDataSource<Veiculo>(retorno);
-        this.dataSource.paginator = this.paginator;
+      this.veiculoService.listarPorModelo(this.modeloBusca, this.veiculoPaginacao).subscribe( (retorno) => {
+        this.veiculos = retorno.content;
+        this.veiculoPaginacao.totalElements = retorno.totalElements;
+        this.veiculo = new Veiculo();
       });
     }
   }

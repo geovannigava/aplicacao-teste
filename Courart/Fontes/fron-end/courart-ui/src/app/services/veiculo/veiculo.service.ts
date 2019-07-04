@@ -1,3 +1,4 @@
+import { Paginacao } from './../../models/paginacao/paginacao';
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -30,8 +31,10 @@ export class VeiculoService {
 	 *
 	 * @return Observable<any>
 	 */
-  public listarTodos(): Observable<any> {
+  public listarTodos(veiculoPaginaca: Paginacao): Observable<any> {
     let params = new HttpParams();
+    params = params.set('page', veiculoPaginaca.page != null ? veiculoPaginaca.page.toString() : '')
+    .set('size', veiculoPaginaca.size != null ? veiculoPaginaca.size.toString() : '');
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
     this.http.get(this.courartApiUrl + PATH, {
@@ -152,8 +155,10 @@ export class VeiculoService {
    * @param placa
 	 * @return Observable<any>
 	 */
-  public listarPorPlaca(placa: string): Observable<any> {
+  public listarPorPlaca(placa: string, veiculoPaginaca: Paginacao): Observable<any> {
     let params = new HttpParams();
+    params = params.set('page', veiculoPaginaca.page != null ? veiculoPaginaca.page.toString() : '')
+    .set('size', veiculoPaginaca.size != null ? veiculoPaginaca.size.toString() : '');
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
     this.http.get(this.courartApiUrl + PATH + `/buscarPorPlaca/${placa}`, {
@@ -176,8 +181,10 @@ export class VeiculoService {
    * @param modelo
 	 * @return Observable<any>
 	 */
-  public listarPorModelo(modelo: string): Observable<any> {
+  public listarPorModelo(modelo: string, veiculoPaginaca: Paginacao): Observable<any> {
     let params = new HttpParams();
+    params = params.set('page', veiculoPaginaca.page != null ? veiculoPaginaca.page.toString() : '')
+    .set('size', veiculoPaginaca.size != null ? veiculoPaginaca.size.toString() : '');
     let dataObserver;
     let data = new Observable(observer => (dataObserver = observer));
     this.http.get(this.courartApiUrl + PATH + `/buscarPorModelo/${modelo}`, {

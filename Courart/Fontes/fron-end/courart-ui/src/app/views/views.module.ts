@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-import { MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MatSnackBarModule, MatPaginatorModule, MatTableModule, MatNativeDateModule, MatDatepickerModule, MatInputModule, MatCardModule, MatSelectModule, MatFormFieldModule, MatDialogModule } from '@angular/material';
+import { MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MatSnackBarModule, MatPaginatorModule, MatTableModule, MatNativeDateModule, MatDatepickerModule, MatInputModule, MatCardModule, MatSelectModule, MatFormFieldModule, MatDialogModule, MatPaginatorIntl } from '@angular/material';
 import {NgxMaskModule, IConfig} from 'ngx-mask';
 
 import { FuncionarioService } from './../services/funcionario/funcionario.service';
@@ -18,6 +18,7 @@ import { ManterVeiculosComponent } from './manter-veiculos/manter-veiculos.compo
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { VeiculoService } from '../services/veiculo/veiculo.service';
 import { HomeComponent } from './home/home.component';
+import { CustomMatPaginatorIntl } from './CustomMatPaginatorIntl';
 
 
 
@@ -60,7 +61,8 @@ import { HomeComponent } from './home/home.component';
   ],
   providers: [
     FuncionarioService,
-    VeiculoService
+    VeiculoService,
+    {provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl}
   ],
   entryComponents: [DialogBoxComponent],
 })

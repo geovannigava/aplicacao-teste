@@ -1,20 +1,24 @@
 package br.com.courart.aplicacao.model.dao;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import br.com.courart.aplicacao.model.Veiculo;
+import br.com.courart.aplicacao.model.dao.page.PaginacaoDao;
 
 
 @Component
-public class VeiculoDao implements Serializable {
+public class VeiculoDao extends PaginacaoDao {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -28,10 +32,16 @@ public class VeiculoDao implements Serializable {
 	 * Buscar Veículo por placa.
 	 * 
 	 * @param placa
+	 * @param pageable 
 	 * @return List<Veiculo>
 	 */
-	public List<Veiculo> buscarPorPlaca(String placa){
-		return iVeiculoDao.buscarPorPlaca(placa);
+	public Page<Veiculo> buscarPorPlaca(String placa, Pageable pageable){
+		TypedQuery<Veiculo> query = entityManager.createQuery("SELECT veiculo FROM Veiculo veiculo WHERE veiculo.placa = :placa", 
+				Veiculo.class);
+		query.setParameter("placa", placa); 
+		Query queryCount = entityManager.createQuery("SELECT count(veiculo) FROM Veiculo veiculo WHERE veiculo.placa = :placa");
+		queryCount.setParameter("placa", placa); 
+		return paginar(query, queryCount, pageable);
 	}
 	
 	/**
@@ -40,8 +50,13 @@ public class VeiculoDao implements Serializable {
 	 * @param modelo
 	 * @return List<Veiculo>
 	 */
-	public List<Veiculo> buscarPorModelo(String modelo){
-		return iVeiculoDao.buscarPorModelo(modelo);
+	public Page<Veiculo> buscarPorModelo(String modelo, Pageable pageable){
+		TypedQuery<Veiculo> query = entityManager.createQuery("SELECT veiculo FROM Veiculo veiculo WHERE veiculo.modelo LIKE :modelo",
+				Veiculo.class);
+		query.setParameter("modelo", ("%"+modelo+"%")); 
+		Query queryCount = entityManager.createQuery("SELECT count(veiculo) FROM Veiculo veiculo WHERE veiculo.modelo LIKE :modelo");
+		queryCount.setParameter("modelo", ("%"+modelo+"%")); 
+		return paginar(query, queryCount, pageable);
 	}
 
 	/**
@@ -59,8 +74,10 @@ public class VeiculoDao implements Serializable {
 	 * 
 	 * @return List<Veiculo>
 	 */
-	public List<Veiculo> listarTodos() {
-		return (List<Veiculo>) iVeiculoDao.findAllByOrderByIdVeiculoAsc();
+	public Page<Veiculo> listarTodos(Pageable pageable) {
+		TypedQuery<Veiculo> query = entityManager.createQuery("SELECT veiculo FROM Veiculo veiculo", Veiculo.class);
+		Query queryCount = entityManager.createQuery("SELECT count(veiculo) FROM Veiculo veiculo");
+		return paginar(query, queryCount, pageable);
 	}
 	
 	/**

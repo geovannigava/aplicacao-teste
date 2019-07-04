@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,8 +38,8 @@ public class VeiculoController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Veiculo>> listarTodos() {
-		List<Veiculo> veiculos = veiculoService.listarTodos();
+	public ResponseEntity<Page<Veiculo>> listarTodos(Pageable pageable) {
+		Page<Veiculo> veiculos = veiculoService.listarTodos(pageable);
 		return  veiculos != null ? ResponseEntity.ok(veiculos) : ResponseEntity.notFound().build();
 	}
 	
@@ -58,14 +60,14 @@ public class VeiculoController {
 	}
 	
 	@RequestMapping(value = "/buscarPorPlaca/{placa}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Veiculo>> buscarPorPlaca(@PathVariable String placa) {
-		List<Veiculo> veiculos = veiculoService.buscarPorPlaca(placa);
+	public ResponseEntity<Page<Veiculo>> buscarPorPlaca(@PathVariable String placa, Pageable pageable) {
+		Page<Veiculo> veiculos = veiculoService.buscarPorPlaca(placa, pageable);
 		return  veiculos != null ? ResponseEntity.ok(veiculos) : ResponseEntity.notFound().build();
 	}
 	
 	@RequestMapping(value = "/buscarPorModelo/{modelo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Veiculo>> buscarPorModelo(@PathVariable String modelo) {
-		List<Veiculo> veiculos = veiculoService.buscarPorModelo(modelo);
+	public ResponseEntity<Page<Veiculo>> buscarPorModelo(@PathVariable String modelo, Pageable pageable) {
+		Page<Veiculo> veiculos = veiculoService.buscarPorModelo(modelo, pageable);
 		return  veiculos != null ? ResponseEntity.ok(veiculos) : ResponseEntity.notFound().build();
 	}
 	

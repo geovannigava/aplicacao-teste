@@ -1,4 +1,5 @@
 import { AtivoEnum } from './enums/atividade-enum';
+import { Paginacao } from './paginacao/paginacao';
 
 export class Veiculo {
   idVeiculo: number;

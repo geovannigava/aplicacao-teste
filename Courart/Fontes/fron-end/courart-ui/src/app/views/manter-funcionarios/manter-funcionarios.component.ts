@@ -1,11 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSnackBar, MatDialog } from '@angular/material';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, SimpleChanges } from '@angular/core';
+import { MatTableDataSource, MatSnackBar, MatDialog, MatPaginator } from '@angular/material';
 import { FormControl, NgForm } from '@angular/forms';
 
 import { Utils } from './../../util/utils';
 import { Funcionario } from '../../models/funcionario';
 import { FuncionarioService } from './../../services/funcionario/funcionario.service';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
+import { Paginacao } from 'src/app/models/paginacao/paginacao';
 
 @Component({
   selector: 'app-manter-funcionarios',
@@ -19,19 +20,58 @@ export class ManterFuncionariosComponent implements OnInit {
     public snackBar: MatSnackBar,
     public dialog: MatDialog) { }
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+
+  funcionarioPaginacao = new Paginacao();
 
   funcionario = new Funcionario();
   funcionarios = [];
   nomeOuParte: string;
   cpfBusca: string;
   dataTemp: Date;
+  tipoBusca = 'TODOS';
   displayedColumns: string[] = ['idFuncionario', 'nome', 'cpf',
                 'dataNascimento', 'login', 'senha', 'editar', 'excluir'];
-  dataSource: MatTableDataSource<Funcionario>;
 
   ngOnInit() {
+    this.funcionarioPaginacao.page = 0;
+    this.funcionarioPaginacao.size = 5;
     this.buscarTodosFuncionarios();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.funcionarioPaginacao.size = this.paginator.pageSize != undefined ? this.paginator.pageSize : this.funcionarioPaginacao.size;
+    if(this.tipoBusca == 'TODOS'){
+      this.buscarTodosFuncionarios();
+    } else if(this.tipoBusca == 'CPF'){
+      this.buscarPorCpf();
+    } else {
+      this.buscarPorNomeOuParte();
+    }
+  }
+
+  onPaginator(){
+    this.funcionarioPaginacao.page = this.paginator.pageIndex;
+    this.funcionarioPaginacao.size = this.paginator.pageSize != undefined ? this.paginator.pageSize : this.funcionarioPaginacao.size;
+    if(this.tipoBusca == 'TODOS'){
+      this.buscarTodosFuncionarios();
+    } else if(this.tipoBusca == 'CPF'){
+      this.buscarPorCpf();
+    } else {
+      this.buscarPorNomeOuParte();
+    }
+  }
+
+  public onBuscar(tipoBusca: string){
+    this.tipoBusca = tipoBusca;
+    this.funcionarioPaginacao.page = 0;
+    if(this.tipoBusca == 'TODOS'){
+      this.buscarTodosFuncionarios();
+    } else if(this.tipoBusca == 'CPF'){
+      this.buscarPorCpf();
+    } else {
+      this.buscarPorNomeOuParte();
+    }
   }
 
   abrirBarraAviso(message: string, action: string) {
@@ -40,15 +80,7 @@ export class ManterFuncionariosComponent implements OnInit {
     });
   }
 
-  public buscarTodosFuncionarios() {
-    this.funcionarioService.listarTodos().subscribe( (retorno: Funcionario[]) => {
-      this.funcionarios = retorno;
-      this.dataSource = new MatTableDataSource<Funcionario>(retorno);
-      this.dataSource.paginator = this.paginator;
-      this.funcionario = new Funcionario();
-    });
-    this.changeDetectorRefs.detectChanges();
-  }
+
 
   public salvarFuncionario(form: FormControl){
     let funcionarioSalvo: Funcionario;
@@ -93,7 +125,6 @@ export class ManterFuncionariosComponent implements OnInit {
           this.excluirFuncionario(idFuncionario);
         }
       });
-
   }
 
   public excluirFuncionario(idFuncionario: number){
@@ -106,13 +137,21 @@ export class ManterFuncionariosComponent implements OnInit {
     });
   }
 
+  public buscarTodosFuncionarios() {
+    this.funcionarioService.listarTodos(this.funcionarioPaginacao).subscribe( (retorno) => {
+      this.funcionarios = retorno.content;
+      this.funcionarioPaginacao.totalElements = retorno.totalElements;
+      this.funcionario = new Funcionario();
+    });
+    this.changeDetectorRefs.detectChanges();
+  }
+
   public buscarPorNomeOuParte(){
     if(this.nomeOuParte != null){
-      if(this.nomeOuParte.length > 1){
-        this.funcionarioService.listarPorNome(this.nomeOuParte).subscribe( (retorno: Funcionario[]) => {
-          this.funcionarios = retorno;
-          this.dataSource = new MatTableDataSource<Funcionario>(retorno);
-          this.dataSource.paginator = this.paginator;
+      if(this.nomeOuParte.length > 0){
+        this.funcionarioService.listarPorNome(this.nomeOuParte, this.funcionarioPaginacao).subscribe( (retorno) => {
+          this.funcionarios = retorno.content;
+          this.funcionarioPaginacao.totalElements = retorno.totalElements;
         });
       }
     }
@@ -120,11 +159,10 @@ export class ManterFuncionariosComponent implements OnInit {
 
   public buscarPorCpf(){
     if(this.cpfBusca != null){
-      if(this.cpfBusca.length > 1){
-        this.funcionarioService.listarPorCpf(this.cpfBusca).subscribe( (retorno: Funcionario[]) => {
-          this.funcionarios = retorno;
-          this.dataSource = new MatTableDataSource<Funcionario>(retorno);
-          this.dataSource.paginator = this.paginator;
+      if(this.cpfBusca.length > 0){
+        this.funcionarioService.listarPorCpf(this.cpfBusca, this.funcionarioPaginacao).subscribe( (retorno) => {
+          this.funcionarios = retorno.content;
+          this.funcionarioPaginacao.totalElements = retorno.totalElements;
         });
       }
     }

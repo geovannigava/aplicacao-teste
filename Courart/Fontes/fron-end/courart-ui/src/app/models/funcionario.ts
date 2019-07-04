@@ -1,3 +1,5 @@
+import { Paginacao } from './paginacao/paginacao';
+
 export class Funcionario {
   idFuncionario: number;
   cpf: string;

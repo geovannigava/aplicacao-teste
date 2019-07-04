@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,8 +37,8 @@ public class FuncionarioController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Funcionario>> listarTodos() {
-		List<Funcionario> funcionarios = funcionarioService.listarTodos();
+	public ResponseEntity<Page<Funcionario>> listarTodos(Pageable pageable) {
+		Page<Funcionario> funcionarios = funcionarioService.listarTodos(pageable);
 		return  funcionarios != null ? ResponseEntity.ok(funcionarios) : ResponseEntity.notFound().build();
 	}
 	
@@ -57,14 +59,14 @@ public class FuncionarioController {
 	}
 	
 	@RequestMapping(value = "/buscarPorNome/{nome}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Funcionario>> buscarPorNome(@PathVariable String nome) {
-		List<Funcionario> funcionarios = funcionarioService.buscarPorNome(nome);
+	public ResponseEntity<Page<Funcionario>> buscarPorNome(@PathVariable String nome, Pageable pageable) {
+		Page<Funcionario> funcionarios = funcionarioService.buscarPorNome(nome, pageable);
 		return  funcionarios != null ? ResponseEntity.ok(funcionarios) : ResponseEntity.notFound().build();
 	}
 	
 	@RequestMapping(value = "/buscarPorCpf/{cpf}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Funcionario>> buscarPorCpf(@PathVariable String cpf) {
-		List<Funcionario> funcionarios = funcionarioService.buscarPorCpf(cpf);
+	public ResponseEntity<Page<Funcionario>> buscarPorCpf(@PathVariable String cpf, Pageable pageable) {
+		Page<Funcionario> funcionarios = funcionarioService.buscarPorCpf(cpf, pageable);
 		return  funcionarios != null ? ResponseEntity.ok(funcionarios) : ResponseEntity.notFound().build();
 	}
 	

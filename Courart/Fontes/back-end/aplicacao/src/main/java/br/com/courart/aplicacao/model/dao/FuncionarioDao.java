@@ -1,21 +1,24 @@
 package br.com.courart.aplicacao.model.dao;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import br.com.courart.aplicacao.model.Funcionario;
+import br.com.courart.aplicacao.model.dao.page.PaginacaoDao;
 
 
 @Component
-public class FuncionarioDao implements Serializable {
+public class FuncionarioDao extends PaginacaoDao {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,10 +32,16 @@ public class FuncionarioDao implements Serializable {
 	 * Buscar Funcionarios por nome.
 	 * 
 	 * @param nome
+	 * @param pageable 
 	 * @return List<Funcionario>
 	 */
-	public List<Funcionario> buscarPorNome(String nome) {
-		return iFuncionarioDao.buscarPorNome(nome);
+	public Page<Funcionario> buscarPorNome(String nome, Pageable pageable) {
+		TypedQuery<Funcionario> query = entityManager.createQuery("SELECT funcionario FROM Funcionario funcionario WHERE funcionario.nome LIKE :nome",
+				Funcionario.class);
+		query.setParameter("nome", ("%"+nome+"%")); 
+		Query queryCount = entityManager.createQuery("SELECT count(funcionario) FROM Funcionario funcionario WHERE funcionario.nome LIKE :nome");
+		queryCount.setParameter("nome", ("%"+nome+"%")); 
+		return paginar(query, queryCount, pageable);
 	}
 	
 	/**
@@ -41,8 +50,13 @@ public class FuncionarioDao implements Serializable {
 	 * @param cpf
 	 * @return List<Funcionario>
 	 */
-	public List<Funcionario> buscarPorCpf(String cpf) {
-		return iFuncionarioDao.buscarPorCpf(cpf);
+	public Page<Funcionario> buscarPorCpf(String cpf, Pageable pageable) {
+		TypedQuery<Funcionario> query = entityManager.createQuery("SELECT funcionario FROM Funcionario funcionario WHERE funcionario.cpf = :cpf", 
+				Funcionario.class);
+		query.setParameter("cpf", cpf); 
+		Query queryCount = entityManager.createQuery("SELECT count(funcionario) FROM Funcionario funcionario WHERE funcionario.cpf = :cpf");
+		queryCount.setParameter("cpf", cpf); 
+		return paginar(query, queryCount, pageable);
 	}
 	
 	/**
@@ -60,11 +74,12 @@ public class FuncionarioDao implements Serializable {
 	 * 
 	 * @return List<Funcionario>
 	 */
-	public List<Funcionario> listarTodos() {
-		return (List<Funcionario>) iFuncionarioDao.findAllByOrderByIdFuncionarioAsc();
+	public Page<Funcionario> listarTodos(Pageable pageable) {
+		TypedQuery<Funcionario> query = entityManager.createQuery("SELECT funcionario FROM Funcionario funcionario", Funcionario.class);
+		Query queryCount = entityManager.createQuery("SELECT count(funcionario) FROM Funcionario funcionario");
+		return paginar(query, queryCount, pageable);
 	}
 	
-
 
 	/**
 	 * Buscar Funcionario por Id.
@@ -104,8 +119,8 @@ public class FuncionarioDao implements Serializable {
 	 * @return List<Funcionario>
 	 */
 	public List<Funcionario> buscarFuncionariosAniversariantes(LocalDate inicio, LocalDate fim) {
-		Query query = entityManager.createNativeQuery( "SELECT * FROM courart.tb_funcionarios WHERE (extract(DOY FROM data_nascimento) BETWEEN :diaInicio AND :diaFim ) ORDER BY id_funcionario ASC", 
-				Funcionario.class); 
+		Query query = entityManager.createNativeQuery( "SELECT * FROM courart.tb_funcionarios WHERE (extract(DOY FROM data_nascimento) "
+				+ " BETWEEN :diaInicio AND :diaFim ) ORDER BY id_funcionario ASC", Funcionario.class); 
 		query.setParameter("diaInicio", inicio.getDayOfYear()); 
 		query.setParameter("diaFim", fim.getDayOfYear()); 
 		return query.getResultList(); 

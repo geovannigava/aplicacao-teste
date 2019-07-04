@@ -39,8 +39,7 @@
 
         <div class="col-md-2">
           <mat-form-field>
-            <mat-select placeholder="Ativo ?" [(ngModel)]="veiculo.ativoEnum" name="select" required
-            [(value)]="selected">
+            <mat-select placeholder="Ativo ?" [(ngModel)]="veiculo.ativoEnum" name="select" required>
               <mat-option *ngFor="let tp of tipoStatus" [value]="tp.value">
                 {{tp.viewValue}}
               </mat-option>
@@ -67,7 +66,7 @@
         <div class="col-md-2">
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Consumo Médio" value="Digite o Consumo Médio"
-            name="consumoMedio" [(ngModel)]="veiculo.consumoMedio" 
+            name="consumoMedio" [(ngModel)]="veiculo.consumoMedio"
               #consumoMedio="ngModel" required>
           </mat-form-field>
         </div>
@@ -83,7 +82,7 @@
       </div>
 
       <div *ngIf="!veiculo.idVeiculo" class=" pull-left">
-        <button mat-raised-button color="primary" (click)="salvarFuncionario(form)"
+        <button mat-raised-button color="primary" (click)="salvarVeiculo(form)"
         [disabled]="form.invalid">Cadastrar
           Veículo</button>
       </div>
@@ -108,14 +107,14 @@
           <mat-form-field>
             <input matInput placeholder="Consulta por Placa" [(ngModel)]="placaBusca"
             name="placaBusca" mask="SSS-0000">
-            <mat-icon matSuffix (click)="buscarPorPlaca()" class="pointer">search</mat-icon>
+            <mat-icon matSuffix (click)="onBuscar('PLACA')" class="pointer">search</mat-icon>
           </mat-form-field>
         </div>
         <div class="col-md-6">
           <mat-form-field>
             <input matInput placeholder="Consulta por Modelo"
             [(ngModel)]="modeloBusca" name="modeloBusca">
-            <mat-icon matSuffix (click)="buscarPorModelo()" class="pointer">search</mat-icon>
+            <mat-icon matSuffix (click)="onBuscar('MODELO')" class="pointer">search</mat-icon>
           </mat-form-field>
         </div>
       </div>
@@ -125,11 +124,11 @@
   <mat-card class="matcard-container">
     <h4 class="box-title fonte" >Veículos:</h4>
     <div class="bottom-right">
-        <button mat-raised-button color="primary" (click)="buscarTodosVeiculos()"
+        <button mat-raised-button color="primary" (click)="onBuscar('TODOS')"
         > Buscar Todos</button>
     </div>
     <br>
-    <table mat-table [dataSource]="dataSource" class="example-full-width">
+    <table mat-table [dataSource]="veiculos" class="example-full-width">
 
         <ng-container matColumnDef="idVeiculo">
           <th mat-header-cell *matHeaderCellDef> <b>No.</b>  </th>
@@ -212,7 +211,15 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+      <mat-paginator #paginator class="full-width"
+      [length]="veiculoPaginacao.totalElements"
+      [pageIndex]="veiculoPaginacao.page"
+      [pageSize]="veiculoPaginacao.size"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      (page)="onPaginator()">
+    </mat-paginator>
+
 </mat-card>
 
 </div>
