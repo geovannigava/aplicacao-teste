@@ -30,6 +30,8 @@ export class ManterFuncionariosComponent implements OnInit {
   cpfBusca: string;
   dataTemp: Date;
   tipoBusca = 'TODOS';
+  isLoading = true;
+
   displayedColumns: string[] = ['idFuncionario', 'nome', 'cpf',
                 'dataNascimento', 'login', 'senha', 'editar', 'excluir'];
 
@@ -51,6 +53,7 @@ export class ManterFuncionariosComponent implements OnInit {
   }
 
   onPaginator(){
+    this.isLoading = true;
     this.funcionarioPaginacao.page = this.paginator.pageIndex;
     this.funcionarioPaginacao.size = this.paginator.pageSize != undefined ? this.paginator.pageSize : this.funcionarioPaginacao.size;
     if(this.tipoBusca == 'TODOS'){
@@ -63,6 +66,7 @@ export class ManterFuncionariosComponent implements OnInit {
   }
 
   public onBuscar(tipoBusca: string){
+    this.isLoading = true;
     this.tipoBusca = tipoBusca;
     this.funcionarioPaginacao.page = 0;
     if(this.tipoBusca == 'TODOS'){
@@ -74,13 +78,12 @@ export class ManterFuncionariosComponent implements OnInit {
     }
   }
 
+
   abrirBarraAviso(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 3000,
     });
   }
-
-
 
   public salvarFuncionario(form: FormControl){
     let funcionarioSalvo: Funcionario;
@@ -140,28 +143,31 @@ export class ManterFuncionariosComponent implements OnInit {
   public buscarTodosFuncionarios() {
     this.funcionarioService.listarTodos(this.funcionarioPaginacao).subscribe( (retorno) => {
       this.funcionarios = retorno.content;
+      this.isLoading = false;
       this.funcionarioPaginacao.totalElements = retorno.totalElements;
       this.funcionario = new Funcionario();
     });
     this.changeDetectorRefs.detectChanges();
   }
 
-  public buscarPorNomeOuParte(){
-    if(this.nomeOuParte != null){
-      if(this.nomeOuParte.length > 0){
+  public buscarPorNomeOuParte() {
+    if(this.nomeOuParte != null) {
+      if(this.nomeOuParte.length > 0) {
         this.funcionarioService.listarPorNome(this.nomeOuParte, this.funcionarioPaginacao).subscribe( (retorno) => {
           this.funcionarios = retorno.content;
+          this.isLoading = false;
           this.funcionarioPaginacao.totalElements = retorno.totalElements;
         });
       }
     }
   }
 
-  public buscarPorCpf(){
-    if(this.cpfBusca != null){
-      if(this.cpfBusca.length > 0){
+  public buscarPorCpf() {
+    if(this.cpfBusca != null) {
+      if(this.cpfBusca.length > 0) {
         this.funcionarioService.listarPorCpf(this.cpfBusca, this.funcionarioPaginacao).subscribe( (retorno) => {
           this.funcionarios = retorno.content;
+          this.isLoading = false;
           this.funcionarioPaginacao.totalElements = retorno.totalElements;
         });
       }

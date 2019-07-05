@@ -22,6 +22,8 @@
     "@angular/platform-browser": "~8.0.1",
     "@angular/platform-browser-dynamic": "~8.0.1",
     "@angular/router": "~8.0.1",
+    "angular-font-awesome": "^3.1.2",
+    "font-awesome": "^4.7.0",
     "moment": "^2.24.0",
     "ngx-bootstrap": "^4.3.0",
     "ngx-mask": "^8.0.0",

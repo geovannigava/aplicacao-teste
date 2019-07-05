@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-import { MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MatSnackBarModule, MatPaginatorModule, MatTableModule, MatNativeDateModule, MatDatepickerModule, MatInputModule, MatCardModule, MatSelectModule, MatFormFieldModule, MatDialogModule, MatPaginatorIntl } from '@angular/material';
+import { MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MatSnackBarModule, MatPaginatorModule, MatTableModule, MatNativeDateModule, MatDatepickerModule, MatInputModule, MatCardModule, MatSelectModule, MatFormFieldModule, MatDialogModule, MatPaginatorIntl, MatProgressSpinnerModule } from '@angular/material';
 import {NgxMaskModule, IConfig} from 'ngx-mask';
 
 import { FuncionarioService } from './../services/funcionario/funcionario.service';
@@ -55,7 +55,8 @@ import { CustomMatPaginatorIntl } from './CustomMatPaginatorIntl';
     MatPaginatorModule,
     NgxMaskModule.forRoot(),
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   exports: [
   ],

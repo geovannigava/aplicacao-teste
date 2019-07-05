@@ -19,7 +19,6 @@ export class MenuNavComponent {
   constructor(private breakpointObserver: BreakpointObserver,
     public router: Router) {}
 
-
   clickManterVeiculos(){
     this.router.navigate(['/manter-veiculos']);
   }

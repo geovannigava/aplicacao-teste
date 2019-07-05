@@ -163,3 +163,36 @@
 .text-center .img-responsive {
   margin: 0 auto;
 }
+
+/* Exibição do Loading*/
+.content-wrapper > .overlay,
+.overlay-wrapper > .overlay,
+.content-wrapper > .loading-img,
+.overlay-wrapper > .loading-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+}
+.content-wrapper .overlay,
+.overlay-wrapper .overlay {
+  z-index: 20000;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+}
+.content-wrapper .overlay > .fa,
+.overlay-wrapper .overlay > .fa {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -15px;
+  margin-top: -15px;
+  color: #000;
+  font-size: 30px;
+}
+.content-wrapper .overlay.dark,
+.overlay-wrapper .overlay.dark {
+  background: rgba(0, 0, 0, 0.5);
+}

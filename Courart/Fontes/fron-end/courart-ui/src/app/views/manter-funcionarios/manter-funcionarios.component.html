@@ -86,7 +86,7 @@
     </form>
   </mat-card>
 
-  <mat-card class="matcard-container">
+  <mat-card class="matcard-container" *ngIf="!isLoading">
       <h4 class="box-title fonte" >Funcionários:</h4>
       <div class="bottom-right">
           <button mat-raised-button color="primary" (click)="onBuscar('TODOS')"
@@ -153,7 +153,10 @@
           [pageSizeOptions]="[5, 10, 20, 50]"
           (page)="onPaginator()">
         </mat-paginator>
+      </mat-card>
 
+      <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center" class="matcard-container">
+        <mat-progress-spinner color="primary" mode="indeterminate"> </mat-progress-spinner>
       </mat-card>
 
 </div>

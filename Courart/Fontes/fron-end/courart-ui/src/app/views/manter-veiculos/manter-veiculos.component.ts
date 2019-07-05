@@ -27,6 +27,7 @@ export class ManterVeiculosComponent implements OnInit {
   placaBusca: string;
   modeloBusca: string;
   tipoBusca = 'TODOS';
+  isLoading = true;
   tipoStatus: SelectStatus[] = [
     { value: 'SIM', viewValue: 'Sim' },
     { value: 'NAO', viewValue: 'Não' }
@@ -57,9 +58,9 @@ export class ManterVeiculosComponent implements OnInit {
   }
 
   onPaginator(){
+    this.isLoading = true;
     this.veiculoPaginacao.page = this.paginator.pageIndex;
     this.veiculoPaginacao.size = this.paginator.pageSize != undefined ? this.paginator.pageSize : this.veiculoPaginacao.size;
-
     if(this.tipoBusca == 'TODOS'){
       this.buscarTodosVeiculos();
     } else if(this.tipoBusca == 'PLACA'){
@@ -70,6 +71,7 @@ export class ManterVeiculosComponent implements OnInit {
   }
 
   public onBuscar(tipoBusca: string) {
+    this.isLoading = true;
     this.tipoBusca = tipoBusca;
     this.veiculoPaginacao.page = 0;
     if(this.tipoBusca == 'TODOS'){
@@ -148,6 +150,7 @@ public excluirVeiculo(idVeiculo: number){
 public buscarTodosVeiculos() {
   this.veiculoService.listarTodos(this.veiculoPaginacao).subscribe( (retorno) => {
     this.veiculos = retorno.content;
+    this.isLoading = false;
     this.veiculoPaginacao.totalElements = retorno.totalElements;
     this.veiculo = new Veiculo();
   });
@@ -160,6 +163,7 @@ public buscarPorPlaca(){
     if(this.placaBusca.length > 1){
       this.veiculoService.listarPorPlaca(this.placaBusca, this.veiculoPaginacao).subscribe( (retorno) => {
         this.veiculos = retorno.content;
+        this.isLoading = false;
         this.veiculoPaginacao.totalElements = retorno.totalElements;
         this.veiculo = new Veiculo();
       });
@@ -172,6 +176,7 @@ public buscarPorModelo(){
     if(this.modeloBusca.length > 1){
       this.veiculoService.listarPorModelo(this.modeloBusca, this.veiculoPaginacao).subscribe( (retorno) => {
         this.veiculos = retorno.content;
+        this.isLoading = false;
         this.veiculoPaginacao.totalElements = retorno.totalElements;
         this.veiculo = new Veiculo();
       });
