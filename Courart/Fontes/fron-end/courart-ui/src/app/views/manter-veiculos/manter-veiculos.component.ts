@@ -28,6 +28,7 @@ export class ManterVeiculosComponent implements OnInit {
   modeloBusca: string;
   tipoBusca = 'TODOS';
   isLoading = true;
+  selecionado = 'SIM';
   tipoStatus: SelectStatus[] = [
     { value: 'SIM', viewValue: 'Sim' },
     { value: 'NAO', viewValue: 'Não' }
@@ -43,6 +44,7 @@ export class ManterVeiculosComponent implements OnInit {
     this.veiculoPaginacao.page = 0;
     this.veiculoPaginacao.size = 5;
     this.veiculo.quantidadePassageiros = 4;
+    //this.veiculo.ativoEnum = AtivoEnum.SIM;
     this.buscarTodosVeiculos();
   }
 
@@ -152,7 +154,6 @@ public buscarTodosVeiculos() {
     this.veiculos = retorno.content;
     this.isLoading = false;
     this.veiculoPaginacao.totalElements = retorno.totalElements;
-    this.veiculo = new Veiculo();
   });
   this.changeDetectorRefs.detectChanges();
 }
