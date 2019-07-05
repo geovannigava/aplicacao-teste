@@ -5,6 +5,10 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
+      <a mat-list-item (click)="clickHome()" role="button" routerLinkActive="active">
+          <mat-icon aria-hidden="false" >home</mat-icon>
+        <span > Home</span>
+      </a>
       <a mat-list-item (click)="clickManterVeiculos()" role="button" routerLinkActive="active">
           <mat-icon aria-hidden="false" >directions_car</mat-icon>
         <span > Veículos</span>

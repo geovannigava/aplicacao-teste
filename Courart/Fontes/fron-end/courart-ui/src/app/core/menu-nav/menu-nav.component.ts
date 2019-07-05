@@ -28,4 +28,7 @@ export class MenuNavComponent {
   clickRelatorios(){
     this.router.navigate(['/relatorios']);
   }
+  clickHome(){
+    this.router.navigate(['/home']);
+  }
 }
