@@ -5,8 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,13 +34,10 @@ public class VeiculoDao extends PaginacaoDao {
 	 * @param pageable 
 	 * @return List<Veiculo>
 	 */
-	public Page<Veiculo> buscarPorPlaca(String placa, Pageable pageable){
-		TypedQuery<Veiculo> query = entityManager.createQuery("SELECT veiculo FROM Veiculo veiculo WHERE veiculo.placa = :placa", 
-				Veiculo.class);
-		query.setParameter("placa", placa); 
-		Query queryCount = entityManager.createQuery("SELECT count(veiculo) FROM Veiculo veiculo WHERE veiculo.placa = :placa");
-		queryCount.setParameter("placa", placa); 
-		return paginar(query, queryCount, pageable);
+	public Page<Veiculo> buscarPorPlaca(String placa, Pageable pageable){		
+		String jpql = new String("SELECT veiculo FROM Veiculo veiculo WHERE veiculo.placa = '"+placa+"'");
+		System.out.println(jpql);
+		return paginar(jpql, Veiculo.class, pageable);
 	}
 	
 	/**
@@ -51,12 +47,8 @@ public class VeiculoDao extends PaginacaoDao {
 	 * @return List<Veiculo>
 	 */
 	public Page<Veiculo> buscarPorModelo(String modelo, Pageable pageable){
-		TypedQuery<Veiculo> query = entityManager.createQuery("SELECT veiculo FROM Veiculo veiculo WHERE veiculo.modelo LIKE :modelo",
-				Veiculo.class);
-		query.setParameter("modelo", ("%"+modelo+"%")); 
-		Query queryCount = entityManager.createQuery("SELECT count(veiculo) FROM Veiculo veiculo WHERE veiculo.modelo LIKE :modelo");
-		queryCount.setParameter("modelo", ("%"+modelo+"%")); 
-		return paginar(query, queryCount, pageable);
+		String jpql = new String("SELECT veiculo FROM Veiculo veiculo WHERE veiculo.modelo LIKE '%"+modelo+"%'");
+		return paginar(jpql, Veiculo.class, pageable);
 	}
 
 	/**
@@ -75,9 +67,8 @@ public class VeiculoDao extends PaginacaoDao {
 	 * @return List<Veiculo>
 	 */
 	public Page<Veiculo> listarTodos(Pageable pageable) {
-		TypedQuery<Veiculo> query = entityManager.createQuery("SELECT veiculo FROM Veiculo veiculo", Veiculo.class);
-		Query queryCount = entityManager.createQuery("SELECT count(veiculo) FROM Veiculo veiculo");
-		return paginar(query, queryCount, pageable);
+		String jpql = new String("SELECT veiculo FROM Veiculo veiculo");
+		return paginar(jpql, Veiculo.class, pageable);
 	}
 	
 	/**

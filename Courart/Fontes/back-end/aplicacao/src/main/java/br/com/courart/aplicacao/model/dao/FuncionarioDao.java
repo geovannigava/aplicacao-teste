@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,12 +35,8 @@ public class FuncionarioDao extends PaginacaoDao {
 	 * @return List<Funcionario>
 	 */
 	public Page<Funcionario> buscarPorNome(String nome, Pageable pageable) {
-		TypedQuery<Funcionario> query = entityManager.createQuery("SELECT funcionario FROM Funcionario funcionario WHERE funcionario.nome LIKE :nome",
-				Funcionario.class);
-		query.setParameter("nome", ("%"+nome+"%")); 
-		Query queryCount = entityManager.createQuery("SELECT count(funcionario) FROM Funcionario funcionario WHERE funcionario.nome LIKE :nome");
-		queryCount.setParameter("nome", ("%"+nome+"%")); 
-		return paginar(query, queryCount, pageable);
+		String jpql = new String("SELECT funcionario FROM Funcionario funcionario WHERE funcionario.nome LIKE '%"+nome+"%'");
+		return paginar(jpql, Funcionario.class, pageable);
 	}
 	
 	/**
@@ -51,12 +46,9 @@ public class FuncionarioDao extends PaginacaoDao {
 	 * @return List<Funcionario>
 	 */
 	public Page<Funcionario> buscarPorCpf(String cpf, Pageable pageable) {
-		TypedQuery<Funcionario> query = entityManager.createQuery("SELECT funcionario FROM Funcionario funcionario WHERE funcionario.cpf = :cpf", 
-				Funcionario.class);
-		query.setParameter("cpf", cpf); 
-		Query queryCount = entityManager.createQuery("SELECT count(funcionario) FROM Funcionario funcionario WHERE funcionario.cpf = :cpf");
-		queryCount.setParameter("cpf", cpf); 
-		return paginar(query, queryCount, pageable);
+		String jpql = new String("SELECT funcionario FROM Funcionario funcionario WHERE funcionario.cpf  = '"+cpf+"'");
+		System.out.println(jpql);
+		return paginar(jpql, Funcionario.class, pageable);
 	}
 	
 	/**
@@ -75,9 +67,8 @@ public class FuncionarioDao extends PaginacaoDao {
 	 * @return List<Funcionario>
 	 */
 	public Page<Funcionario> listarTodos(Pageable pageable) {
-		TypedQuery<Funcionario> query = entityManager.createQuery("SELECT funcionario FROM Funcionario funcionario", Funcionario.class);
-		Query queryCount = entityManager.createQuery("SELECT count(funcionario) FROM Funcionario funcionario");
-		return paginar(query, queryCount, pageable);
+		String jpql = new String("SELECT funcionario FROM Funcionario funcionario");
+		return paginar(jpql, Funcionario.class, pageable);
 	}
 	
 
