@@ -55,12 +55,12 @@ public class PaginacaoDao implements Serializable{
 	/**
 	 * Contabiliza o total de regristros em uma query
 	 * 
-	 * @param jpql
+	 * @param jpql 
 	 * @param classeRoot
 	 * @return Long
 	 */
 	private <T> Long total(String jpql, Class<?> classeRoot) {
-		Query query = entityManager.createQuery("SELECT COUNT(e) FROM   "+classeRoot.getSimpleName()+"  e WHERE e IN ( " + jpql + " )");
+		Query query = entityManager.createQuery("SELECT COUNT(e) FROM  "+classeRoot.getSimpleName()+"  e WHERE e IN ( " + jpql + " )");
 		return (Long) query.getSingleResult();
 	}
 	
