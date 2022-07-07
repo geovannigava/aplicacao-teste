@@ -24,7 +24,7 @@
     "@angular/router": "~8.0.1",
     "angular-font-awesome": "^3.1.2",
     "font-awesome": "^4.7.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-bootstrap": "^4.3.0",
     "ngx-mask": "^8.0.0",
     "rxjs": "~6.4.0",
